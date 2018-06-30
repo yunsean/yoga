@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: commons-beanutils:commons-beanutils:1.9.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

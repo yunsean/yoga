@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="yoga-user">
+		<class>com.yoga.user.dept.model.Department</class>
+		<class>com.yoga.user.duty.model.Duty</class>
+		<class>com.yoga.user.user.model.Favor</class>
+		<class>com.yoga.user.privilege.model.Privilege</class>
+		<class>com.yoga.user.role.model.Role</class>
+		<class>com.yoga.user.user.model.User</class>
+		<class>com.yoga.user.user.model.UserData</class>
+		<class>com.yoga.user.privilege.model.GroupMapping</class>
+		<class>com.yoga.user.privilege.model.GroupMappingPK</class>
+		<class>com.yoga.tenant.setting.model.Setting</class>
+	</persistence-unit>
+</persistence>

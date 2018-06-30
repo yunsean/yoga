@@ -1,0 +1,48 @@
+/*可以在这里添加你自己的css*/
+.audio_msg_wrp.preview_card {
+    border: 1px solid #e7e7eb;
+    padding: 10px;
+    width: 400px;
+}
+.audio_msg {
+    overflow: hidden;
+}
+.audio_msg .icon_audio_msg {
+    margin-right: 1em;
+    border-radius: 50%;
+    margin-top: 5px;
+    vertical-align: middle;
+}
+.icon_audio_msg {
+    cursor: pointer;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAADt0lEQVRoge2aXXPqNhCGX5lv28EEQwKk7f//R6fTu0JyQsjBYGxjPiypFxkytVfM9AwSTjl+71gWS493Le3KsG9//iXxC8kqewLXVgV866qAb10V8K2rAr51VcDXFmMMT5Mxms3GVcYrFZgxht+eJri7c/E0GYMxZnzM0oBPsI5jAwBarRbGo0fj45YG7LrOJ+xJ3e4dej3P6LilAUdRjDhOiP1hOEC9VjM2bqnP8Ov8DVmW5WyWZcH3+8bGLBWYc475fEHsvZ6Her1uZMyrADPGMBj4yu/iJEGaptTfUJSNA59W44Hfx3A4UPoslyti87yukSgbBS5uPX7/Hq7rEL84SbDb78lvve6d9jkZBR6PH8nW8zAcKn1XAY1y9/8GHIYbSJk/FG02G/C8LvGNky3xbbVaaDT0prVR4CTZYrVaE7tqQeKcY19IawCwOx2tczK+aC2DAFyInK3RaKDdbhHfJNkSW8f+osCMMYxHj2g2mzk75wKbcEP8XYcuXsmWArea9MZcIi3Ap9XY87r44/cn1Gr5y0aKEtJRAB+PGbHpbhsvBi5uPfV6HQM/X2QUCwtADcIzClyr1bS2jRcBF2FPKm4nUkpwznM2FYiQEqLwvAMf9bUuXXSlyWREYIEPmHo93/EUgU9+Ran8vgxwEKyVEflQPnoqOFWmSsPvMi8CTtMU09kLiQrnPNf2McaUwFlGo1nMDACQZ2/qz+viXNntdpgVoKMozvl0FMUDF4JUVowxZfqez6Kfl5aHY7ffYzp7RpZlyDKO9x/L3PeqhuF4OBDbuWdaaMxzbYXqfn/AdPYMxqxctC3LUnY9qqpKtVUdDkddUwSgERhQT873+8rIxQpg26Yrvqq+vkRGa2nb7qB/3yP24/GoLEYcRd0cJ7RKu0RGgQe+r6ySAkXva1kW2u12zialxHZLb8wlMgr88v2VpGSWZVirmgnXITcnTXdaV2jAMDDnHH9Pn7Hb7T5tb2/vZDsCgP79PbElmtMZuEI/LITAdPaCNE2xXoeI4pj42HaH9MdSSoSbSPt8zBz+FiSEwGz2gnO7qSq6Ybghh/Q6dBVgAGeLB9dxSGEipcQyCIzMo9Q3D5ZlYTR6IPbNJlIeBmgZ08hV/6MeH4bksF0IgR9LM9EFvsAL8aIWi3ccj3rLyX+rVODvr3Osw/Dz8yaKlHu0Tl1t0Tqn+XwBKSRc11G+SdSt0oEB4G3xjmWw0l5VqVT6v3hOMrHnqvRlgK+lCvjWVQHfuirgW1cFfOv65YD/ARo5Z08rFhyzAAAAAElFTkSuQmCC') 0 0 no-repeat;
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.audio_msg .audio_content {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.audio_title {
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+.audio_msg .audio_title {
+    font-weight: 400;
+    color: #222;
+}
+.audio_msg .audio_desc {
+    color: #8d8d8d;
+}
+.audio_title audio{
+    height: 22px;
+}
+.preview_card video{
+    width: 200px;
+}

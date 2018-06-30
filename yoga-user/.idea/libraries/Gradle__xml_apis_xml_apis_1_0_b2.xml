@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: xml-apis:xml-apis:1.0.b2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

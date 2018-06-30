@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.imessager.moment.mapper.MomentMapper">
+
+    <select id="findMomentByTenantId" resultType="com.yoga.imessager.moment.model.Moment">
+        select m.*, u.fullname creator, u.avatar avatar
+        from im_moment m join s_user u on u.id = m.creator_id
+        where m.tenant_id = #{tenantId}
+        <if test="deptId!=null">
+            and u.dept_id = #{deptId}
+        </if>
+        <if test="bigThan!=null">
+            and m.id &gt; #{bigThan}
+        </if>
+        <if test="smallThan!=null">
+            and m.id &lt; #{smallThan}
+        </if>
+        <choose>
+            <when test="limitCount!=null and smallThan!=null" >
+                order by m.id desc
+                limit #{limitCount}
+            </when>
+            <when test="limitCount!=null and bigThan!=null" >
+                order by m.id
+                limit #{limitCount}
+            </when>
+            <otherwise>
+                order by m.id desc
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findFollowByMementId" resultType="com.yoga.imessager.moment.model.MomentFollow">
+      select f.*, u1.fullname replier, u1.avatar replier_avatar, u2.fullname receiver, u2.avatar receiver_avatar
+      from im_moment_follow f join s_user u1 on u1.id = f.replier_id left join s_user u2 on u2.id = f.receiver_id
+      where f.moment_id = #{momentId}
+    </select>
+    <select id="findUpvoteByMementId" resultType="com.yoga.imessager.moment.model.MomentUpvote">
+        select u.*, s.fullname upvoter, s.avatar upvoter_avatar
+        from im_moment_upvote u left join s_user s on s.id = u.upvoter_id
+        where u.moment_id = #{momentId}
+    </select>
+
+</mapper>

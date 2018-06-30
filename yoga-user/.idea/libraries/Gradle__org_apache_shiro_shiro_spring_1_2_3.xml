@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.shiro:shiro-spring:1.2.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.shiro/shiro-spring/1.2.3/1e1cce0a92ce3612967de861a2a94e01e47faa73/shiro-spring-1.2.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.shiro/shiro-spring/1.2.3/db437ca9e54bc5704e87dfd6be9e06ca98c9cdef/shiro-spring-1.2.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

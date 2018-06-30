@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		kotlinVersion = '1.1.2'
+		springBootVersion = '1.3.3.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+	}
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'kotlin-jpa'
+apply plugin: "kotlin-allopen"
+allOpen {
+	annotation("javax.transaction.Transactional")
+}
+
+version = '1.0.0'
+sourceCompatibility = 1.8
+compileKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+
+repositories {
+	mavenLocal()
+	maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+
+jar {
+	baseName = 'yoga-wechat'
+	version =  '1.3.0'
+}
+dependencies {
+	compile ("org.im4java:im4java:1.4.0")
+	compile project(":yoga-common")
+	compile project(":yoga-resource")
+	compile project(":yoga-user")
+
+	compile("com.github.binarywang:weixin-java-mp:2.8.0")
+	compile("com.github.binarywang:weixin-java-pay:2.8.0")
+	compile 'com.google.code.gson:gson:2.7'
+
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+}

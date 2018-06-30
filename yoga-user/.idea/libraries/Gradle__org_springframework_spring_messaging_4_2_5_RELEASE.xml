@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework:spring-messaging:4.2.5.RELEASE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-messaging/4.2.5.RELEASE/604103815489605ed609a742a6bbc708ae3db12c/spring-messaging-4.2.5.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-messaging/4.2.5.RELEASE/8754020978799650881a529cea0f5ccd9630b912/spring-messaging-4.2.5.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

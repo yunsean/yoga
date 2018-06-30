@@ -1,0 +1,64 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.3.RELEASE'
+	}
+    repositories {
+		mavenLocal()
+		maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+repositories {
+	mavenLocal()
+	maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+jar {
+    baseName = 'yoga-common'
+    version =  '1.0.0'
+}
+dependencies{
+	compile("org.springframework.boot:spring-boot-starter-parent:1.3.3.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile("com.h2database:h2")
+	compile("commons-codec:commons-codec:1.10")
+	compile("org.springframework.boot:spring-boot-starter")
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+	compile("org.springframework:spring-tx")
+	compile("org.springframework:spring-jdbc")
+	compile("org.springframework.boot:spring-boot-starter-tomcat")
+	compile("org.springframework.boot:spring-boot-starter-redis")
+	compile("org.springframework.boot:spring-boot-starter-freemarker")
+	compile("org.springframework.boot:spring-boot-starter-aop")
+	compile("mysql:mysql-connector-java:5.1.38")
+	compile("com.alibaba:fastjson:1.2.4")
+	compile("org.apache.shiro:shiro-core:1.2.3")
+	compile("org.apache.shiro:shiro-spring:1.2.3")
+	compile("org.apache.shiro:shiro-web:1.2.3")
+	compile("org.apache.shiro:shiro-ehcache:1.2.3")
+	compile("org.apache.commons:commons-lang3:3.5")
+	compile("com.google.zxing:core:3.2.1")
+	compile("net.glxn:qrgen:1.4")
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+	compile("org.springframework.boot:spring-boot-starter-amqp")
+	compile("commons-fileupload:commons-fileupload:1.3.1")
+	compile("commons-httpclient:commons-httpclient:3.1")
+	compile("org.json:json:20140107")
+	compile("com.google.guava:guava:18.0")
+	compile('com.google.code.gson:gson:2.3.1')
+	compile("org.redisson:redisson:3.3.2")
+	compile('org.springframework.boot:spring-boot-actuator:1.3.3.RELEASE')
+	compile fileTree(dir:'lib', include:['*.jar'])
+}
+configurations.all {
+   exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+springBoot {
+  mainClass = "com.yoga.core.CoreApplication"
+}

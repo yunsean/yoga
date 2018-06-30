@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.code.gson:gson:2.3.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

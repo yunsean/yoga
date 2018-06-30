@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: javax.cache:cache-api:1.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.cache/cache-api/1.0.0/2b57384801243f387f1a2e7ab8066ac79c2a91d3/cache-api-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.cache/cache-api/1.0.0/71f0adeaf098d78a17774b11f6c83c8d90c47721/cache-api-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

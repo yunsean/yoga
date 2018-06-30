@@ -1,0 +1,6 @@
+include ":yoga-common", ":yoga-resource", ":yoga-user"
+include ":yoga-ueditor"
+project(':yoga-common').projectDir = new File('../yoga-common/')
+project(':yoga-resource').projectDir = new File('../yoga-resource/')
+project(':yoga-user').projectDir = new File('../yoga-user/')
+project(':yoga-ueditor').projectDir = new File('../yoga-ueditor/')

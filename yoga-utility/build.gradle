@@ -1,0 +1,29 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.3.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+version = '1.0.0'
+repositories {
+	mavenLocal()
+	maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+
+dependencies {
+	compile project(":yoga-common")
+	compile project(":yoga-user")
+	compile project(":yoga-resource")
+}

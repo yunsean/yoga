@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "5" icon ="icon-edit" name="配置管理" url="">
+		<module code="debug_methods" sort="1" icon="" name="接口调试" url="/debug/methods">
+			<permissions code="debug_methods.call" sort = "1" icon = "" name = "调试"  url = ""/>
+		</module>
+	</menu>
+</menus>

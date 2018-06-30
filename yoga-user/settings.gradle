@@ -1,0 +1,3 @@
+include ":yoga-common", ":yoga-resource"
+project(':yoga-common').projectDir = new File('../yoga-common/')
+project(':yoga-resource').projectDir = new File('../yoga-resource/')

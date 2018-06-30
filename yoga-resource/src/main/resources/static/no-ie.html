@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>浏览器错误</title>
+    <link onerror="wx_loaderror(this)" rel="stylesheet" type="text/css"
+          href="https://res.wx.qq.com/mpres/htmledition/style/base/base36574a.css"/>
+    <link onerror="wx_loaderror(this)" rel="stylesheet"
+          href="https://res.wx.qq.com/mpres/htmledition/style/page/home/page_browser_upgrade309cd6.css">
+</head>
+<body class="zh_CN">
+<div class="head" id="header">
+    <script type="text/javascript">
+        window._points && (window._points[1] = +new Date());
+    </script>
+</div>
+<div id="body" class="body page_simple page_find_pwd">
+    <div class="container_box">
+        <div class="container_bd">
+            <div class="page_msg mini default">
+                <div class="inner"><span class="msg_icon_wrp"><i class="icon_msg_mini warn"></i></span>
+                    <div class="msg_content"><p>你正在使用的浏览器内核版本过低，<a
+                            href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"
+                            target="_blank">微软已经不再提供技术支持</a>，为避免可能存在的安全隐患，请尽快升级你的浏览器或者安装更安全的浏览器访问本平台。</p></div>
+                </div>
+            </div>
+            <div class="browser_list">
+                <a class="browser_item chrome"
+                   href="http://xiazai.sogou.com/detail/34/0/6262355089742005676.html?uID=04583CB73B70900A0000000057318502&w=2295"
+                   target="_blank" data-type="chrome">
+                    <i class="icon_browser" data-type="chrome"></i>
+                    <strong class="browser_name" data-type="chrome">Chrome</strong>
+                </a>
+                <a class="browser_item qqbrowser"
+                   href="http://browser.qq.com/"
+                   target="_blank" data-type="qq">
+                    <i class="icon_browser" data-type="qq"></i>
+                    <strong class="browser_name" data-type="qq">QQ浏览器</strong>
+                </a>
+                <a class="browser_item sogou_browser"
+                   href="http://ie.sogou.com/"
+                   target="_blank" data-type="sougou">
+                <i class="icon_browser" data-type="sougou"></i>
+                    <strong class="browser_name" data-type="sougou">搜狗浏览器</strong>
+                </a>
+            </div>
+            <div class="browser_tips">
+                <p> 如果你正在使用的是双核浏览器，比如QQ浏览器、搜狗浏览器、猎豹浏览器、世界之窗浏览器、傲游浏览器、360浏览器等，可以使用浏览器的极速模式来继续访问。 <a
+                        href="javascript:void(0);" id="access">查看详情</a></p></div>
+            <div class="browser_tips" id="tips" style="display:none">
+                <ul>
+                    <li> 方法一，点击浏览器顶部地址栏右侧的浏览器兼容模式图标，<img
+                            src="https://res.wx.qq.com/mpres/htmledition/images/icon/browser/icon_browser_mode_ie_12db5d9.png"
+                            alt="">或<img
+                            src="https://res.wx.qq.com/mpres/htmledition/images/icon/browser/icon_browser_mode_ie_22db5d9.png"
+                            alt="">，切换到极速模式<br>
+                        <p class="tc"><img
+                                src="https://res.wx.qq.com/mpres/htmledition/images/icon/browser/pic_browser_mode_ie_12db5d9.png"
+                                alt=""></p></li>
+                    <li> 方法二，在当前页面中，点击鼠标右键，选择“切换到极速模式”<br>
+                        <p class="tc"><img
+                                src="https://res.wx.qq.com/mpres/htmledition/images/icon/browser/pic_browser_mode_ie_22db5d9.jpg"
+                                alt=""></p></li>
+                    <li> 方法三，在浏览器菜单栏中选择工具选项，打开“兼容性视图设置”，把设置框底部的“在兼容性视图显示”三个勾选框去掉<br>
+                        <p class="tc"><img
+                                src="https://res.wx.qq.com/mpres/htmledition/images/icon/browser/pic_browser_mode_ie_42dfebd.png"
+                                alt=""></p></li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            (function () {
+                var tips = document.getElementById("tips");
+                var access = document.getElementById("access");
+                var isShow = false;
+                access.onclick = function () {
+                    if (!isShow) {
+                        tips.style.display = "block";
+                        isShow = true;
+                    } else {
+                        tips.style.display = "none";
+                        isShow = false;
+                    }
+                }
+            })();
+        </script>
+        <script>
+            var ua = navigator.userAgent.toLowerCase();
+            var re = new RegExp("msie ([0-9]+[\.0-9]*)");
+            var version;
+            if (re.exec(ua) != null) {
+                version = parseInt(RegExp.$1);
+            }
+            if (typeof version != 'undefined' && version >= 6 && version <= 8) {
+                var items = document.getElementsByTagName('a');
+                for (var i = 0, len = items.length; i < len; ++i) {
+                    items[i].attachEvent('onclick', function (event) {
+                        event = event || window.event;
+                        var target = event.currentTarget || event.srcElement;
+                        if (target.id === 'access') {
+                            (new Image()).src = "/mp/jsmonitor?idkey=28307_41_1";
+                        } else if (target.className.indexOf('browser') >= 0) {
+                            (new Image()).src = "/mp/jsmonitor?idkey=28307_39_1";
+                            var type = target.getAttribute('data-type');
+                            if (type === 'chrome') {
+                                (new Image()).src = "/mp/jsmonitor?idkey=28307_42_1";
+                            } else if (type === 'qq') {
+                                (new Image()).src = "/mp/jsmonitor?idkey=28307_43_1";
+                            } else if (type === 'sougou') {
+                                (new Image()).src = "/mp/jsmonitor?idkey=28307_44_1";
+                            }
+                        } else {
+                            (new Image()).src = "/mp/jsmonitor?idkey=28307_40_1";
+                        }
+                    })
+                }
+                if (version === 6) {
+                    (new Image()).src = "/mp/jsmonitor?idkey=28307_36_1";
+                } else if (version === 7) {
+                    (new Image()).src = "/mp/jsmonitor?idkey=28307_37_1";
+                } else if (version === 8) {
+                    (new Image()).src = "/mp/jsmonitor?idkey=28307_38_1";
+                }
+            }
+        </script>
+    </div>
+</div>
+<script type="text/javascript">
+    window._points && (window._points[2] = +new Date());
+</script>
+</body>
+</html>
