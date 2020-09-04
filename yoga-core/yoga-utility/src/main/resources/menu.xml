@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "1001" icon = "icon-user" name = "站点选项"  url = "">
+		<module code="gcf_sms" sort="5" icon="" name="短信通知">
+			<permissions code="gcf_sms.send" sort = "2" icon = "" name = "发送短信"  url = ""/>
+		</module>
+		<module code="gcf_sms_captcha" sort="5" icon="" name="可发送短信验证码" />
+		<module code="gcf_user_logon" sort="5" icon="" name="管理用户可注册" />
+		<module code="gcf_email" sort="5" icon="" name="邮件通知" />
+		<module code="gcf_push" sort="5" icon="" name="移动推送" />
+		<module code="api_aliyun_idcard" sort="5" icon="" name="身份证识别" />
+		<module code="api_feie_printer" sort="6" icon="" name="飞鹅云打印" >
+			<permissions code="api_feie_printer.print" sort = "2" icon = "" name = "打印"  url = ""/>
+			<permissions code="api_feie_printer.clean" sort = "2" icon = "" name = "清空打印队列"  url = ""/>
+		</module>
+	</menu>
+</menus>

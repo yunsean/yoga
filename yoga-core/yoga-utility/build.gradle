@@ -1,0 +1,27 @@
+version '1.0.0'
+dependencies {
+	implementation project(':yoga-core:yoga-common')
+    implementation project(':yoga-core:yoga-excelkit')
+    implementation project(':yoga-core:yoga-setting')
+    implementation project(':yoga-core:yoga-logging')
+
+    implementation libraries['spring-context-support']
+    implementation libraries['spring-tx']
+    implementation libraries['im4java']
+    implementation libraries['mail']
+    implementation libraries['quartz']
+    implementation libraries['quartz-jobs']
+
+    implementation("c3p0:c3p0:0.9.1.2")
+    implementation('com.sun.mail:smtp:1.6.3')
+    implementation('javax.mail:mail:1.5.0-b01')
+    implementation("org.apache.httpcomponents:httpclient:4.3.4")
+
+    implementation("org.apache.pdfbox:pdfbox:2.0.1")
+    implementation("com.lowagie:itext:2.0.7")
+    implementation("com.alibaba:druid:1.0.18")
+}
+configurations.all {
+    exclude group: 'com.sun.mail', module: 'mailapi'
+    exclude group: 'javax.mail', module: 'mailapi'
+}

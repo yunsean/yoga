@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.comment.mapper.FavoriteMapper">
+    <select id="latestFavoriteCount" resultType="com.yoga.content.comment.ao.FavoriteCount">
+        select cc.tenant_id, cc.article_id,
+        (select count(1) from cms_favorite where article_id = cc.article_id) favorite_count
+        from cms_favorite cc
+        where cc.add_time >= #{afterTime}
+        GROUP BY cc.article_id, cc.tenant_id
+    </select>
+</mapper>

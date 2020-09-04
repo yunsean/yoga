@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: org.jboss.logging:jboss-logging:3.3.0.Final">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

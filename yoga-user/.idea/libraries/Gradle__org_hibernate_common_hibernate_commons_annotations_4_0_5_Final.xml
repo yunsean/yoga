@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: org.hibernate.common:hibernate-commons-annotations:4.0.5.Final">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/common/hibernate-commons-annotations/4.0.5.Final/hibernate-commons-annotations-4.0.5.Final.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

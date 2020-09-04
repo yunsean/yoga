@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.tenant.tenant.mapper.TenantMenuMapper">
+
+    <select id="getMenusForUser" resultType="com.yoga.tenant.tenant.model.TenantMenu">
+        select DISTINCT(m.id) as id, m.code, m.name, m.enabled, m.group, m.remark, m.sort, m.url, m.tenant_id
+        from system_tenant_menu m
+        inner join operator_user u on u.id = #{userId}
+        inner join operator_privilege p on m.tenant_id = p.tenant_id and m.enabled = 1 and m.code = p.code 
+        inner join operator_accredit a on p.role_id = a.role_id and p.tenant_id = a.tenant_id 
+        where a.tenant_id = #{tenantId} and a.object_type = 1 and a.object_id = u.branch_id
+        or a.tenant_id = #{tenantId} and a.object_type = 2 and a.object_id = u.duty_id
+        or a.tenant_id = #{tenantId} and a.object_type = 3 and a.object_id = u.id
+    </select>
+</mapper>

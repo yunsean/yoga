@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.comment.mapper.UpvoteMapper">
+    <select id="latestUpvoteCount" resultType="com.yoga.content.comment.ao.UpvoteCount">
+        select cc.tenant_id, cc.article_id,
+        (select count(1) from cms_upvote where article_id = cc.article_id) upvote_count
+        from cms_upvote cc
+        where cc.issue_time >= #{afterTime}
+        GROUP BY cc.article_id, cc.tenant_id
+    </select>
+</mapper>

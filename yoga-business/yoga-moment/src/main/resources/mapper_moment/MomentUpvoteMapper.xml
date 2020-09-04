@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.moment.message.mapper.MomentUpvoteMapper">
+
+    <select id="findUpvoteByMementId" resultType="com.yoga.moment.message.model.MomentUpvote">
+        select u.*, s.nickname upvoter, s.avatar upvoter_avatar
+        from moment_upvote u left join operator_user s on s.id = u.upvoter_id
+        where u.message_id = #{messageId}
+    </select>
+    <select id="countUpvoteForUser" resultType="java.lang.Long">
+        select count(1)
+        from moment_message mm
+        join moment_upvote mu on mu.moment_id = mm.id
+        where mm.creator_id = #{userId}
+        <if test="after != null">
+        and mu.issue_time  > #{after}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,70 @@
+subprojects {
+    dependencies {
+		implementation libraries['spring-boot-starter']
+		implementation libraries['spring-boot-starter-parent']
+		implementation libraries['spring-boot-starter-amqp']
+		implementation libraries['spring-boot-actuator']
+		implementation libraries['spring-boot-starter-data-jpa']
+		implementation libraries['spring-boot-dependencies']
+		implementation libraries['spring-boot-configuration-processor']
+		implementation libraries['spring-boot-starter-test']
+
+		implementation libraries['camel-parent']
+		implementation libraries['spring-boot-starter-jdbc']
+		implementation libraries['spring-tx']
+		implementation libraries['spring-jdbc']
+		implementation libraries['spring-boot-starter-tomcat']
+		implementation libraries['spring-boot-starter-data-redis']
+		implementation libraries['spring-boot-starter-freemarker']
+		implementation libraries['spring-boot-starter-aop']
+		implementation libraries['spring-boot-starter-log4j2']
+
+		implementation libraries['commons-lang3']
+		implementation libraries['commons-codec']
+		implementation libraries['commons-fileupload']
+		implementation libraries['commons-httpclient']
+
+		implementation libraries['h2']
+		implementation libraries['guava']
+		implementation libraries['redisson']
+		implementation libraries['jedis']
+		implementation libraries['core']
+		implementation libraries['qrgen']
+		implementation libraries['pinyin4j']
+
+		implementation libraries['commons-io']
+		implementation libraries['commons-lang3']
+		implementation libraries['commons-codec']
+
+		implementation libraries['mybatis-spring-boot-starter']
+		implementation libraries['mapper']
+		implementation libraries['mapper-spring-boot-starter']
+		implementation libraries['pagehelper-spring-boot-starter']
+
+		implementation libraries['json']
+		implementation libraries['fastjson']
+		implementation libraries['gson']
+
+		implementation libraries['shiro-core']
+		implementation libraries['shiro-spring']
+		implementation libraries['shiro-web']
+		implementation libraries['shiro-ehcache']
+
+		implementation libraries['retrofit']
+		implementation libraries['converter-gson']
+		implementation libraries['logging-interceptor']
+
+		implementation libraries['dom4j']
+		implementation libraries['jpinyin']
+		implementation libraries['lombok']
+		implementation libraries['springfox-swagger2']
+
+		runtimeOnly libraries['mysql-driver']
+		testImplementation libraries['spring-boot-starter-test']
+	}
+	configurations.all {
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+		exclude group: 'javax.persistence', module: 'persistence-api'
+	}
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "5" icon ="icon-edit" name="内容管理" url="">
+		<module code="cms_property" sort="1" icon="" name="选项管理" url="/admin/cms/property">
+			<permissions code="cms_property.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="cms_property.del" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="cms_property.update" sort = "2" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="cms_template" sort="2" icon="" name="模版管理" url="/admin/cms/template">
+			<permissions code="cms_template.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="cms_template.del" sort = "2" icon = "" name = "删除"  url = ""/>
+			<permissions code="cms_template.update" sort = "2" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="cms_column" sort ="3" icon="" name= "栏目管理" url="/admin/cms/column">
+			<permissions code="cms_column.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="cms_column.del" sort = "2" icon = "" name = "删除"  url = ""/>
+			<permissions code="cms_column.update" sort = "2" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="cms_article" sort="4" icon="" name="文章管理" url="/admin/cms/article">
+			<permissions code="cms_article.add" sort = "2" icon = "" name = "添加"  url = ""/>
+			<permissions code="cms_article.del" sort = "4" icon = "" name = "删除"  url = ""/>
+			<permissions code="cms_article.update" sort = "3" icon = "" name = "修改"  url = ""/>
+		</module>
+	</menu>
+	<menu sort = "5" icon ="icon-edit" name="评论管理" url="">
+		<module code="cms_comment" sort="1" icon="" name="评论管理" url="/admin/cms/comment">
+			<permissions code="cms_comment.audit" sort = "2" icon = "" name = "审核"  url = ""/>
+		</module>
+	</menu>
+</menus>

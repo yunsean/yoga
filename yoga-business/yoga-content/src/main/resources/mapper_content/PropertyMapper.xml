@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.property.mapper.PropertyMapper">
+
+    <select id="childrenOf" resultType="com.yoga.content.property.model.Property">
+        SELECT * FROM
+        (SELECT * FROM cms_property ORDER BY parent_id, id DESC) realname_sorted,
+        (SELECT @pv := #{parentId}) initialisation
+        WHERE tenant_id = #{tenantId} AND (
+        (FIND_IN_SET(parent_id, @pv) > 0 AND @pv := concat(@pv, ',', id))
+        <if test="containSelf">
+            or id = #{parentId}
+        </if>
+        )
+    </select>
+    <select id="childrenOfCode" resultType="com.yoga.content.property.model.Property">
+        SELECT * FROM
+        (SELECT * FROM cms_property ORDER BY parent_id, id DESC) realname_sorted,
+        (SELECT @pv := (select id from cms_property where code = #{parentCode})) initialisation
+        WHERE tenant_id = #{tenantId} AND (
+        (FIND_IN_SET(parent_id, @pv) > 0 AND @pv := concat(@pv, ',', id))
+        <if test="containSelf">
+            or code = #{parentCode}
+        </if>
+        )
+    </select>
+    <select id="listByIds" resultType="com.yoga.content.property.model.Property">
+        select *
+        from cms_property
+        where tenant_id = #{tenantId}
+        <foreach collection="ids" item="id" separator="or" open="and (" close=")" index="">
+            id = #{id}
+        </foreach>
+    </select>
+</mapper>

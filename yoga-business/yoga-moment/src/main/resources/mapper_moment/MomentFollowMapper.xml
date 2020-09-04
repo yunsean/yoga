@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.moment.message.mapper.MomentFollowMapper">
+
+    <select id="findFollowByMementId" resultType="com.yoga.moment.message.model.MomentFollow">
+      select f.*, u1.nickname replier, u1.avatar replier_avatar, u2.nickname receiver, u2.avatar receiver_avatar
+      from moment_follow f join operator_user u1 on u1.id = f.replier_id left join operator_user u2 on u2.id = f.receiver_id
+      where f.message_id = #{messageId}
+    </select>
+
+</mapper>

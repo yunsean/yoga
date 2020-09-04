@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.operator.user.mapper.UserMapper">
+
+    <select id="list" resultType="com.yoga.operator.user.model.User">
+        select u.*, d.`level`, d.name duty, b.name branch, GROUP_CONCAT(r.name) as roles
+        from operator_user u
+        left join operator_branch b on b.id = u.branch_id
+        left join operator_duty d on d.id = u.duty_id
+        left join operator_accredit a on a.object_type = 3 and a.object_id = u.id
+        left join operator_role r on r.id = a.role_id
+        where u.tenant_id = #{tenantId} and u.deleted = false
+        <if test="filter != null and filter != ''">
+            and (u.username like "%"#{filter}"%" or u.nickname like "%"#{filter}"%")
+        </if>
+        <if test="branchId != null">
+            and u.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and u.duty_id = #{dutyId}
+        </if>
+        <if test="dutyCode != null and dutyCode != ''">
+            and d.code = #{dutyCode}
+        </if>
+        <if test="levelAbove != null">
+            and d.level > #{levelAbove}
+        </if>
+        <if test="excludeBranchId != null">
+            and u.branch_id != #{excludeBranchId}
+        </if>
+        GROUP BY u.id
+        order by d.level desc, u.id desc
+    </select>
+    <select id="get" resultType="com.yoga.operator.user.model.User">
+      select u.*, d.name duty, b.name branch from operator_user u
+        left join operator_branch b on b.id = u.branch_id
+        left join operator_duty d on d.id = u.duty_id
+        where u.id = #{userId}
+        and u.tenant_id = #{tenantId} and u.deleted = false
+    </select>
+    <select id="listUserOfPrivilege" resultType="com.yoga.operator.user.model.User">
+        select * from (select u.*, d.name duty, b.name branch, d.`level`
+        FROM operator_user u
+        LEFT JOIN operator_branch b ON b.id = u.branch_id
+        LEFT JOIN operator_duty d ON d.id = u.duty_id
+        LEFT JOIN operator_accredit ba ON ba.object_id = u.branch_id and ba.object_type = 1
+        LEFT JOIN operator_privilege bp ON bp.role_id = ba.role_id
+        WHERE u.tenant_id = #{tenantId} and u.deleted = false and bp.`code` = #{privilege}
+        <if test="filter != null and filter != ''">
+            and (u.username like "%"#{filter}"%" or u.nickname like "%"#{filter}"%")
+        </if>
+        <if test="branchId != null">
+            and u.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and u.duty_id = #{dutyId}
+        </if>
+        <if test="dutyCode != null and dutyCode != ''">
+            and d.code = #{dutyCode}
+        </if>
+        <if test="levelAbove != null">
+            and d.level > #{levelAbove}
+        </if>
+
+        union
+
+        select u.*, d.name duty, b.name branch, d.`level`
+        FROM operator_user u
+        LEFT JOIN operator_branch b ON b.id = u.branch_id
+        LEFT JOIN operator_duty d ON d.id = u.duty_id
+        LEFT JOIN operator_accredit da ON da.object_id = u.duty_id and da.object_type = 2
+        LEFT JOIN operator_privilege dp ON dp.role_id = da.role_id
+        WHERE u.tenant_id = #{tenantId} and u.deleted = false and dp.`code` = #{privilege}
+        <if test="filter != null and filter != ''">
+            and (u.username like "%"#{filter}"%" or u.nickname like "%"#{filter}"%")
+        </if>
+        <if test="branchId != null">
+            and u.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and u.duty_id = #{dutyId}
+        </if>
+        <if test="dutyCode != null and dutyCode != ''">
+            and d.code = #{dutyCode}
+        </if>
+        <if test="levelAbove != null">
+            and d.level > #{levelAbove}
+        </if>
+
+        union
+
+        select u.*, d.name duty, b.name branch, d.`level`
+        FROM operator_user u
+        LEFT JOIN operator_branch b ON b.id = u.branch_id
+        LEFT JOIN operator_duty d ON d.id = u.duty_id
+        LEFT JOIN operator_accredit ua ON ua.object_id = u.id and ua.object_type = 3
+        LEFT JOIN operator_privilege up ON up.role_id = ua.role_id
+        WHERE u.tenant_id = #{tenantId} and u.deleted = false and up.`code` = #{privilege}
+        <if test="filter != null and filter != ''">
+            and (u.username like "%"#{filter}"%" or u.nickname like "%"#{filter}"%")
+        </if>
+        <if test="branchId != null">
+            and u.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and u.duty_id = #{dutyId}
+        </if>
+        <if test="dutyCode != null and dutyCode != ''">
+            and d.code = #{dutyCode}
+        </if>
+        <if test="levelAbove != null">
+            and d.level > #{levelAbove}
+        </if>
+
+        ) rr
+        where 1 = 1
+        <if test="childBranchId != null">
+            and branch_id in (
+            select id from (
+            select t1.id,
+            if(find_in_set(parent_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
+            from (
+            select id,parent_id from operator_branch t order by parent_id, id
+            ) t1,
+            (select @pids := #{childBranchId}) t2
+            ) t3 where ischild != 0 union select t4.id from operator_branch t4 where t4.id = #{childBranchId}
+            )
+        </if>
+        order by level desc, id desc
+    </select>
+    <select id="listUserByChildBranchAndLessDuty" resultType="com.yoga.operator.user.model.User">
+        select u.*, d.`name` duty, b.`name` branch
+        from operator_user u
+        inner join operator_duty d on d.id = u.duty_id
+        left join operator_branch b on b.id = u.branch_id
+        where u.tenant_id = #{tenantId} and u.deleted = 0 and d.`level` >= (select level from operator_duty where id = #{dutyId})
+        <if test="branchId != null">
+            and u.branch_id in (SELECT T2.id
+            FROM (SELECT @r AS _id,
+            (SELECT @r := parent_id FROM operator_branch WHERE id = _id) AS parent_id,
+            @l := @l + 1 AS lvl FROM (SELECT @r := #{branchId}, @l := 0) vars, operator_branch h
+            WHERE @r &lt;> 0 AND parent_id > 0
+            ) T1
+            JOIN operator_branch T2 ON T1._id = T2.id)
+        </if>
+        ORDER BY d.level
+    </select>
+    <select id="getLowestDutyLevelUserByChildBranch" resultType="com.yoga.operator.user.model.User">
+        select u.*, d.`name` duty, b.`name` branch
+        from operator_user u
+        inner join operator_duty d on d.id = u.duty_id
+        left join operator_branch b on b.id = u.branch_id
+        where u.tenant_id = #{tenantId} and u.deleted = 0 and d.`level` >= (select level from operator_duty where id = #{dutyId})
+        and u.branch_id in (SELECT T2.id
+        FROM (SELECT @r AS _id,
+        (SELECT @r := parent_id FROM operator_branch WHERE id = _id) AS parent_id,
+        @l := @l + 1 AS lvl FROM (SELECT @r := #{branchId}, @l := 0) vars, operator_branch h
+        WHERE @r &lt;> 0 AND parent_id > 0
+        ) T1
+        JOIN operator_branch T2 ON T1._id = T2.id)
+        ORDER BY d.level
+        limit 1
+    </select>
+    <select id="getByUserName" resultType="com.yoga.operator.user.model.User">
+        select u.*, d.name duty, b.name branch from operator_user u
+        left join operator_branch b on b.id = u.branch_id
+        left join operator_duty d on d.id = u.duty_id
+        where u.tenant_id = #{tenantId} and u.deleted = false
+        and (u.username = #{username} or u.mobile = #{username} or u.email = #{username})
+        limit 1
+    </select>
+    <select id="listUserInIds" resultType="com.yoga.operator.user.model.User">
+        select u.*, b.`name` branch, d.`name` duty
+        from operator_user u
+        left join operator_branch b on b.id = u.branch_id
+        left join operator_duty d on d.id = u.duty_id
+        where u.tenant_id = #{tenantId}
+        <if test="ids != null">
+            <foreach collection="ids" item="id" separator="or" open="and (u.id = " close=")" index="">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+    <select id="getHighestDutyLevelUserByChildBranch" resultType="com.yoga.operator.user.model.User">
+        select u.*, d.`name` duty, b.`name` branch
+        from operator_user u
+        inner join operator_duty d on d.id = u.duty_id
+        left join operator_branch b on b.id = u.branch_id
+        where u.tenant_id = #{tenantId} and u.deleted = 0
+        and u.branch_id in (SELECT T2.id
+        FROM (SELECT @r AS _id,
+        (SELECT @r := parent_id FROM operator_branch WHERE id = _id) AS parent_id,
+        @l := @l + 1 AS lvl FROM (SELECT @r := #{branchId}, @l := 0) vars, operator_branch h
+        WHERE @r &lt;> 0 AND parent_id > 0
+        ) T1
+        JOIN operator_branch T2 ON T1._id = T2.id)
+        ORDER BY d.level desc
+        limit 1
+    </select>
+</mapper>

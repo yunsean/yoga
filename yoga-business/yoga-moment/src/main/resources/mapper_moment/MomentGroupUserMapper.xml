@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.moment.group.mapper.MomentGroupUserMapper">
+
+    <select id="listUser" resultType="com.yoga.moment.group.model.MomentGroupUser">
+        select mgu.*, ou.nickname, ou.avatar, ob.`name` branch
+        from moment_group_user mgu
+        left join operator_user ou on ou.id = mgu.user_id
+        left join operator_branch ob on ob.id = ou.branch_id
+        where mgu.group_id = #{groupId}
+        <if test="filter != null and filter != ''">
+        and (ou.nickname like "%"#{filter}"%" or ou.username like "%"#{filter}"%" or ob.`name` like "%"#{filter}"%")
+        </if>
+    </select>
+    <select id="allUser" resultType="com.yoga.moment.group.ao.UserForGroup">
+        select ogu.user_id is not null as included, ob.`name` branch, od.`name` duty, ou.*
+        from operator_user ou
+        left join operator_branch ob on ob.id = ou.branch_id
+        left join operator_duty od on od.id = ou.branch_id
+        <if test="includedOnly == 0">left</if>
+        join moment_group_user ogu on ogu.user_id = ou.id and ogu.group_id = #{groupId}
+        where ou.tenant_id = #{tenantId}
+        <if test="branchId != null">
+        and ou.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+        and ou.duty_id = #{dutyId}
+        </if>
+        <if test="filter != null and filter != ''">
+        and (ou.nickname like "%"#{filter}"%" or ou.username like "%"#{filter}"%" or ob.`name` like "%"#{filter}"%")
+        </if>
+    </select>
+</mapper>

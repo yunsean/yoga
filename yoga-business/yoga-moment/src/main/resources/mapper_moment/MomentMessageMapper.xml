@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.moment.message.mapper.MomentMessageMapper">
+
+    <select id="findMomentByTenantId" resultType="com.yoga.moment.message.model.MomentMessage">
+        select m.*, u.nickname creator, u.avatar avatar, b.name branch
+        from moment_message m
+        join operator_user u on u.id = m.creator_id
+        left join operator_branch b on b.id = u.branch_id
+        where m.tenant_id = #{tenantId}
+        <if test="groupId!=null">
+            and u.group_id = #{groupId}
+        </if>
+        <if test="bigThan!=null">
+            and m.id &gt; #{bigThan}
+        </if>
+        <if test="smallThan!=null">
+            and m.id &lt; #{smallThan}
+        </if>
+        <choose>
+            <when test="limitCount!=null and smallThan!=null" >
+                order by m.id desc
+                limit #{limitCount}
+            </when>
+            <when test="limitCount!=null and bigThan!=null" >
+                order by m.id
+                limit #{limitCount}
+            </when>
+            <otherwise>
+                order by m.id desc
+            </otherwise>
+        </choose>
+    </select>
+    <select id="countNewestMessages" resultType="java.lang.Long">
+        select count(1)
+        from moment_message mm
+        join moment_group_user mgu on mgu.user_id = mm.creator_id
+        where mm.tenant_id = #{tenantId}
+        <if test="bigThan!=null">
+            and m.id &gt; #{bigThan}
+        </if>
+        and mgu.group_id in (select group_id from moment_group_user where user_id = #{userId})
+    </select>
+
+</mapper>

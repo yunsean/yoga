@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "900" icon = "icon-circle" name = "信息沟通"  url = "" >
+		<module code="jmessage_group" sort = "1" icon = "" name = "群组管理"  url = "/admin/jmessage/group/list">
+			<permissions code="jmessage_group.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="jmessage_group.delete" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="jmessage_group.update" sort = "1" icon = "" name = "修改"  url = ""/>
+		</module>
+	</menu>
+</menus>

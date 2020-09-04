@@ -1,0 +1,9 @@
+version '1.0.0'
+dependencies {
+	implementation project(':yoga-core:yoga-resource')
+	implementation project(':yoga-business:yoga-admin')
+
+	implementation libraries['spring-boot-starter-data-mongodb']
+	implementation libraries['quartz']
+	implementation libraries['quartz-jobs']
+}

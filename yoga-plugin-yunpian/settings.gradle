@@ -1,3 +1,0 @@
-include ":yoga-common"
-
-project(':yoga-common').projectDir = new File('../yoga-common/')

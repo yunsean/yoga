@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menus>
-	<menu sort = "1001" icon = "icon-user" name = "站点选项"  url = "">
-		<module code="gcf_pay" sort="5" icon="" name="支付宝支付模组" />
-		<module code="gcf_wxpay" sort="6" icon="" name="微信支付模组" />
-
-	</menu>
-</menus>

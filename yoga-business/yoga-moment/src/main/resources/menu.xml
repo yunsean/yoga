@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "900" icon = "icon-circle" name = "信息交流"  url = "" >
+		<module code="moment_group" sort = "1" icon = "" name = "群组管理"  url = "/admin/moment/group/list">
+			<permissions code="moment_group.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="moment_group.delete" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="moment_group.update" sort = "1" icon = "" name = "修改"  url = ""/>
+		</module>
+	</menu>
+</menus>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "-5000" icon = "icon-user" name = "权限管理"  url = "" >
+		<module code="admin_role" sort = "1" icon = "" name = "角色管理"  url = "/admin/operator/role/list">
+			<permissions code="admin_role.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="admin_role.del" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="admin_role.update" sort = "1" icon = "" name = "授权"  url = ""/>
+		</module>
+		<module code="admin_branch" sort = "2" icon = "" name = "部门管理"  url = "/admin/operator/branch/list">
+			<permissions code="admin_branch.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="admin_branch.del" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="admin_branch.update" sort = "1" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="admin_duty" sort = "3" icon = "" name = "职级管理"  url = "/admin/operator/duty/list">
+			<permissions code="admin_duty.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="admin_duty.del" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="admin_duty.update" sort = "1" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="admin_user" sort = "4" icon = "" name = "用户管理"  url = "/admin/operator/user/list">
+			<permissions code="admin_user.add" sort = "1" icon = "" name = "添加"  url = ""/>
+			<permissions code="admin_user.del" sort = "1" icon = "" name = "删除"  url = ""/>
+			<permissions code="admin_user.update" sort = "1" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="pri_login" sort = "5" icon = "" name = "登录类型">
+			<permissions code="admin.login" sort = "1" icon = "" name = "后台登录"  url = ""/>
+			<permissions code="web.login" sort = "1" icon = "" name = "前台登录"  url = ""/>
+		</module>
+	</menu>
+	<menu sort = "-2000" icon = "icon-cog" name = "租户管理"  url = "">
+		<module code="gbl_tenant_template" sort="-105" icon="" name="租户模板" url="/admin/tenant/template/list">
+			<permissions code="gbl_tenant_template.add" sort = "2" icon = "" name = "添加"  url = ""/>
+			<permissions code="gbl_tenant_template.del" sort = "3" icon = "" name = "删除"  url = ""/>
+			<permissions code="gbl_tenant_template.update" sort = "4" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="gbl_tenant" sort="-104" icon="" name="租户管理" url="/admin/tenant/tenant/list">
+			<permissions code="gbl_tenant.add" sort = "2" icon = "" name = "添加"  url = ""/>
+			<permissions code="gbl_tenant.del" sort = "3" icon = "" name = "删除"  url = ""/>
+			<permissions code="gbl_tenant.update" sort = "4" icon = "" name = "修改"  url = ""/>
+		</module>
+	</menu>
+	<menu sort = "1000" icon = "icon-cogs" name = "配置管理"  url = "">
+		<module code="sys_config" sort="5" icon="" name="系统配置" url="/admin/system/setting/list">
+			<permissions code="sys_config.update" sort = "2" icon = "" name = "修改"  url = ""/>
+		</module>
+		<module code="sys_logging" sort="5" icon="" name="日志查询" url="/admin/system/logging/list" />
+		<module code="sys_apidoc" sort="999" icon="" name="接口文档"  url="/doc.html" />
+		<module code="cfg_quartz" sort = "1" icon = "" name = "定时任务"  url = "/admin/setting/quartz/list">
+			<permissions code="cfg_quartz.update" sort = "1" icon = "" name = "设置"  url = ""/>
+		</module>
+	</menu>
+</menus>

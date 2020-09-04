@@ -1,0 +1,4 @@
+version '1.0.0'
+dependencies {
+    implementation files('libs/aliyun-java-sdk-core-4.1.0.jar')
+}

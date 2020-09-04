@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.template.mapper.TemplateMapper">
+
+    <select id="list" resultType="com.yoga.content.template.model.Template">
+        select ct.*,
+        (select count(*) from cms_template_field where template_id = ct.id) field_count
+        from cms_template ct
+        where ct.tenant_id = #{tenantId}
+        <if test="keyword != null and keyword != ''">
+            and (ct.`name` like "%"#{keyword}"%" or ct.`code` like "%"#{keyword}"%" or ct.remark like "%"#{keyword}"%")
+        </if>
+        <if test="enabled != null">
+            and ct.enabled = #{enabled}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.column.mapper.ColumnMapper">
+
+    <select id="list" resultType="com.yoga.content.column.model.Column">
+        select cc.*, ct.`name` template_name, ct.`code` template_code, count(child.id) children_count
+        from cms_column cc
+        left join cms_template ct on ct.id = cc.template_id
+        left join cms_column child on child.parent_id = cc.id
+        where cc.tenant_id = #{tenantId}
+        <if test="keyword != null and keyword != ''">
+            and (cc.`name` like "%"#{keyword}"%" or cc.`code` like "%"#{keyword}"%")
+        </if>
+        <if test="enabled != null">
+            and cc.enabled = #{enabled}
+        </if>
+        <if test="parentId != null">
+            and cc.parent_id = #{parentId}
+        </if>
+        <if test="hidden != null">
+            and cc.hidden = #{hidden}
+        </if>
+        GROUP BY cc.id
+    </select>
+    <select id="childrenOf" resultType="com.yoga.content.column.model.Column">
+        SELECT * FROM
+        (SELECT * FROM cms_column ORDER BY parent_id, id DESC) realname_sorted,
+        (SELECT @pv := #{parentId}) initialisation
+        WHERE tenant_id = #{tenantId} AND (
+        (FIND_IN_SET(parent_id, @pv) > 0 AND @pv := concat(@pv, ',', id))
+        <if test="containSelf">
+            or id = #{parentId}
+        </if>
+        )
+        <if test="!includeHidden">
+            and hidden = 0
+        </if>
+    </select>
+    <select id="get" resultType="com.yoga.content.column.model.Column">
+        select cc.*, ct.`name` template_name, ct.`code` template_code
+        from cms_column cc
+        left join cms_template ct on ct.id = cc.template_id
+        where 1 = 1
+        <if test="id != null">
+            and cc.id = #{id}
+        </if>
+        <if test="code != null and code != ''">
+            and cc.code = #{code}
+        </if>
+        limit 1
+    </select>
+</mapper>

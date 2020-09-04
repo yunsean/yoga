@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.moment.group.mapper.MomentGroupMapper">
+
+    <select id="listGroup" resultType="com.yoga.moment.group.model.MomentGroup">
+        select mg.*, (select count(1) from moment_group_user where group_id = mg.id) user_count,
+        (select content from moment_message where group_id = mg.id order by issue_time desc limit 1) last_message
+        from moment_group_user mgu
+        left join moment_group mg on mgu.group_id = mg.id
+        where mg.deleted = 0
+        and mgu.user_id = #{userId}
+    </select>
+    <select id="list" resultType="com.yoga.moment.group.model.MomentGroup">
+        select mg.*, (select count(1) from moment_group_user where group_id = mg.id) user_count
+        from moment_group mg
+        where  mg.deleted = 0
+        and mg.tenant_id = #{tenantId}
+        <if test="filter != null and filter != ''">
+        and mg.`name` like "%"#{filter}"%"
+        </if>
+    </select>
+</mapper>

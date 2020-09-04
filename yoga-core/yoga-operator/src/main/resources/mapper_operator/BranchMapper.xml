@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.operator.branch.mapper.BranchMapper">
+
+    <select id="list" resultType="com.yoga.operator.branch.model.Branch">
+        select d.*, GROUP_CONCAT(r.name) as roles from operator_branch d
+        left join operator_accredit a on a.object_type = 1 and a.object_id = d.id
+        left join operator_role r on r.id = a.role_id
+        where d.tenant_id = #{tenantId}
+        and d.deleted = false
+        GROUP BY d.id
+        order by d.id desc
+    </select>
+    <select id="childrenOf" resultType="com.yoga.operator.branch.model.Branch">
+        SELECT * FROM
+        (SELECT * FROM operator_branch where parent_id > 0 ORDER BY parent_id, id DESC) realname_sorted,
+        (SELECT @pv := #{parentId}) initialisation
+        WHERE tenant_id = #{tenantId} AND (
+        (FIND_IN_SET(parent_id, @pv) > 0 AND @pv := concat(@pv, ',', id))
+        <if test="containSelf">
+          or id = #{parentId}
+        </if>
+        )
+    </select>
+</mapper>

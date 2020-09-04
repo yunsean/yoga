@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.comment.mapper.CommentMapper">
+    <update id="increaceUpvote">
+        update cms_comment
+        set upvote_count = upvote_count + 1
+        where id = #{id}
+    </update>
+    <select id="list" resultType="com.yoga.content.comment.model.Comment">
+        select cc.*
+        ,(select count(1) from cms_comment where comment_id = cc.id) reply_count
+        <if test="replyLimit gt 0">
+            ,(select GROUP_CONCAT(id) from cms_comment where comment_id = cc.id limit #{replyLimit} order by id) reply_ids
+        </if>
+        from cms_comment cc
+        where cc.tenant_id = #{tenantId} and cc.comment_id = 0
+        <if test="articleId != null and articleId != ''">
+            and cc.article_id = #{articleId}
+        </if>
+        <if test="issued != null">
+            and cc.issued = #{issued}
+        </if>
+        <if test="replierId != null">
+            and cc.replier_id = #{replierId}
+        </if>
+        order by cc.id desc
+    </select>
+    <select id="get" resultType="com.yoga.content.comment.model.Comment">
+        select cc.*
+        ,(select count(1) from cms_comment where comment_id = cc.id) reply_count
+        <if test="replyLimit gt 0">
+            ,(select GROUP_CONCAT(id) from cms_comment where comment_id = cc.id limit #{replyLimit} order by id) reply_ids
+        </if>
+        from cms_comment cc
+        where cc.id = #{id}
+    </select>
+    <select id="listReply" resultType="com.yoga.content.comment.model.Comment">
+        select cc.*
+        from cms_comment cc
+        where cc.comment_id = #{id}
+    </select>
+    <select id="getCount" resultType="com.yoga.content.comment.ao.CommentUpvoteCount">
+        select
+        (select count(1) from cms_comment where article_id = #{articleId}) comment_count,
+        (select count(1) from cms_upvote where article_id = #{articleId}) upvote_count
+    </select>
+    <select id="commentCountTop" resultType="com.yoga.content.comment.ao.CommentCount">
+        select cc.article_id, count(cc.article_id) comment_count
+        from cms_comment cc
+        where cc.tenant_id = #{tenantId}
+        GROUP BY cc.article_id
+        ORDER BY comment_count desc
+        LIMIT #{limitCount}
+    </select>
+    <select id="latestCommentCount" resultType="com.yoga.content.comment.ao.CommentCount">
+        select cc.tenant_id, cc.article_id,
+        (select count(1) from cms_comment where article_id = cc.article_id) comment_count
+        from cms_comment cc
+        where cc.issue_time >= #{afterTime}
+        GROUP BY cc.article_id, cc.tenant_id
+    </select>
+    <select id="listForAduit" resultType="com.yoga.content.comment.model.Comment">
+        select *
+        from cms_comment cc
+        where cc.tenant_id = #{tenantId}
+        <if test="issued != null">
+            and cc.issued = #{issued}
+        </if>
+        <if test="filter != null and filter != ''">
+            and (
+                cc.content like "%"#{filter}"%" or cc.article_title like "%"#{filter}"%"
+                or cc.article_id = #{filter} or cc.replier_name = #{filter}
+            )
+        </if>
+    </select>
+</mapper>

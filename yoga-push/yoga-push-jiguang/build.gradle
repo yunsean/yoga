@@ -1,0 +1,15 @@
+version '1.0.0'
+dependencies {
+	implementation('cn.jpush.api:jpush-client:3.3.10')
+	implementation('cn.jpush.api:jmessage-client:1.1.9')
+	implementation('cn.jpush.api:jiguang-common:1.1.4')
+	implementation('io.netty:netty-all:4.1.6.Final')
+	implementation 'com.squareup.retrofit2:converter-jaxb:2.5.0'
+	implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
+	implementation project (':yoga-core:yoga-common')
+	implementation project (':yoga-core:yoga-setting')
+	implementation project (':yoga-core:yoga-logging')
+	implementation project (':yoga-core:yoga-utility')
+	implementation project (':yoga-core:yoga-operator')
+}
+

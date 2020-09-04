@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.content.template.mapper.TemplateFieldMapper">
+    <select id="countOfProperty" resultType="java.lang.Long">
+        select count(1)
+        from cms_template_field ctf
+        join cms_template ct on ct.id = ctf.template_id and ct.tenant_id = #{tenantId}
+        and ctf.type = #{type}
+        and ctf.`code` = #{code}
+    </select>
+</mapper>

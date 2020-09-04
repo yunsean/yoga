@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.operator.duty.mapper.DutyMapper">
+
+    <update id="increceLevel">
+        update operator_duty set level = level + 1
+        where tenant_id = #{tenantId} and level >= #{level}
+    </update>
+    <select id="list" resultType="com.yoga.operator.duty.model.Duty">
+        select d.*, GROUP_CONCAT(r.name) as roles from operator_duty d
+        left join operator_accredit a on a.object_type = 2 and a.object_id = d.id
+        left join operator_role r on r.id = a.role_id
+        where d.tenant_id = #{tenantId}
+        and d.deleted = false
+        <if test="filter != null and filter != ''">
+            and d.name like "%"#{filter}"%"
+        </if>
+        GROUP BY d.id
+        order by d.level desc
+    </select>
+</mapper>

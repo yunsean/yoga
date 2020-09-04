@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.operator.role.mapper.AccreditMapper">
+
+    <select id="getPrivileges" resultType="java.lang.String">
+        select p.code from operator_user u, operator_accredit a, operator_privilege p
+        where p.role_id = a.role_id
+        and u.id = #{userId} and u.tenant_id = #{tenantId}
+        and (
+            a.object_type = 1 and a.object_id = u.branch_id or
+            a.object_type = 2 and a.object_id = u.duty_id or
+            a.object_type = 3 and a.object_id = u.id
+        )
+    </select>
+</mapper>
