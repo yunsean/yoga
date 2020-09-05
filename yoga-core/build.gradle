@@ -1,3 +1,5 @@
+version '1.0.0'
+
 subprojects {
     dependencies {
 		implementation libraries['spring-boot-starter']

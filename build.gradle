@@ -6,31 +6,34 @@ plugins {
 
 apply from: 'dependencies.gradle'
 allprojects {
+	apply plugin: 'java'
+	apply plugin: 'application'
     repositories {
 		mavenLocal()
 		maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
-    group = 'com.eshop'
+    group = 'com.yoga'
     version = '1.0.0'
+
+	jar {
+		enabled = true
+	}
+	startScripts {
+		enabled = false
+	}
 }
 
 subprojects {
-	apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
+	apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
         }
     }
-
-	mainClassName = "com.yoga.admin.AdminApplication"
-    jar {
-        enabled = true
-    }
-    bootJar {
-        enabled = true
-    }
+	bootJar {
+		enabled = false
+	}
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

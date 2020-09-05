@@ -1,3 +1,5 @@
+version '1.0.0'
+
 subprojects {
 	dependencies {
 		implementation project(':yoga-core:yoga-common')
