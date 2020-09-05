@@ -14,13 +14,13 @@ allprojects {
     }
     group = 'com.yoga'
     version = '1.0.0'
-
-	jar {
-		enabled = true
-	}
 	startScripts {
 		enabled = false
 	}
+}
+
+jar {
+	enabled = false
 }
 
 subprojects {
@@ -31,6 +31,9 @@ subprojects {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
         }
     }
+	jar {
+		enabled = true
+	}
 	bootJar {
 		enabled = false
 	}

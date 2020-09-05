@@ -1,5 +1,8 @@
 version '1.0.0'
 
+jar {
+	enabled = false
+}
 subprojects {
 	dependencies {
 		implementation project(':yoga-core:yoga-common')
