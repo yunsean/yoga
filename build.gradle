@@ -30,6 +30,9 @@ subprojects {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
         }
     }
+	jar {
+		enabled = true
+	}
 	bootJar {
 		enabled = false
 	}
