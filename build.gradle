@@ -7,6 +7,7 @@ plugins {
 apply from: 'dependencies.gradle'
 allprojects {
 	apply plugin: 'java'
+	apply plugin: 'maven'
 	apply plugin: 'application'
     repositories {
 		mavenLocal()
@@ -20,6 +21,9 @@ allprojects {
 	startScripts {
 		enabled = false
 	}
+
+	distZip.classifier = 'shadow'
+	distTar.classifier = 'shadow'
 }
 
 subprojects {
