@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.points.summary.mapper.PointsSummaryMapper">
+
+    <select id="list" resultType="com.yoga.points.summary.model.PointsSummary">
+        select s.*, d.name branch, duty.name duty, u.branch_id, u.nickname, u.duty_id
+        from points_summary s inner join operator_user u on s.user_id = u.id
+        left join operator_branch d on d.id = u.branch_id
+        left join operator_duty duty on duty.id = u.duty_id
+        where s.tenant_id = #{tenantId}
+        and s.year = #{year}
+        <if test="userId != null">
+            and s.user_id = #{userId}
+        </if>
+        <if test="branchId != null">
+            and u.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and u.duty_id = #{dutyId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and (u.username = #{keyword} or u.nickname = #{keyword})
+        </if>
+        <if test="penaltyOnly != null and penaltyOnly">
+            and (s.penalty > 0 or s.penalty &lt; 0)
+        </if>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by s.points desc
+        </if>
+    </select>
+    <select id="lowestPoints" resultType="java.lang.Long">
+        select ss.user_id from points_summary ss
+        where ss.tenant_id = #{tenantId}
+        and ss.year = #{year}
+        order by ss.points asc
+        limit #{count}
+    </select>
+</mapper>

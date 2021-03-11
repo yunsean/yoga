@@ -1,0 +1,10 @@
+version '1.0.0'
+
+dependencies {
+    implementation project (':yoga-core:yoga-common')
+    implementation project (':yoga-core:yoga-setting')
+    implementation project (':yoga-core:yoga-logging')
+    implementation project (':yoga-core:yoga-utility')
+    implementation project (':yoga-core:yoga-operator')
+    implementation ('cn.rongcloud.im:server-sdk-java:3.0.5')
+}

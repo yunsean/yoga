@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.points.summary.mapper.PointsYearMapper">
+
+    <select id="maxYear" resultType="com.yoga.points.summary.model.PointsYear">
+        select * from points_year
+        where tenant_id = #{tenantId}
+        and year = (select max(year) from points_year where tenant_id = #{tenantId})
+    </select>
+</mapper>

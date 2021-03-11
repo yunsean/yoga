@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+    <menu sort = "1001" icon = "icon-user" name = "站点选项"  url = "">
+        <module code="gcf_weixinapp" sort="5" icon="" name="小程序接入" />
+    </menu>
+</menus>

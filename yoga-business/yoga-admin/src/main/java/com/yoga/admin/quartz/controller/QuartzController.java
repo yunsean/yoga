@@ -42,7 +42,7 @@ public class QuartzController extends BaseController {
     }
 
     @ResponseBody
-    @GetMapping("/pause.json")
+    @PostMapping("/pause.json")
     @RequiresPermissions("cfg_quartz.update")
     public ApiResult pause(@Valid QuartzGetDto dto, BindingResult bindingResult){
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
@@ -51,7 +51,7 @@ public class QuartzController extends BaseController {
     }
 
     @ResponseBody
-    @GetMapping("/resume.json")
+    @PostMapping("/resume.json")
     @RequiresPermissions("cfg_quartz.update")
     public ApiResult resume(@Valid QuartzGetDto dto, BindingResult bindingResult){
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);

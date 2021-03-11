@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yoga.points.adjust.mapper.PointsAdjustMapper">
+    <select id="list" resultType="com.yoga.points.adjust.model.PointsAdjust">
+        select pa.*, ou.nickname, os.nickname submitter, ob.name branch, od.name duty from points_adjust pa
+        left join operator_user ou on ou.id = pa.user_id
+        left join operator_user os on os.id = pa.submitter_id
+        left join operator_branch ob on ob.id = ou.branch_id
+        left join operator_duty od on od.id = ou.duty_id
+        where pa.tenant_id = #{tenantId}
+        <if test="userId != null">
+            and pa.user_id = #{userId}
+        </if>
+        <if test="branchId != null">
+            and ou.branch_id = #{branchId}
+        </if>
+        <if test="dutyId != null">
+            and ou.duty_id = #{dutyId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and (pa.reason like "%"#{keyword}"%" or ou.nickname = #{keyword})
+        </if>
+        <if test="beginDate != null">
+            and date(pa.add_time) >= #{beginDate}
+        </if>
+        <if test="endDate != null">
+            and date(pa.add_time) &lt;= #{endDate}
+        </if>
+    </select>
+    <select id="penaltyPoints" resultType="com.yoga.points.adjust.ao.SummaryItem">
+        select sa.user_id, sum(sa.points) points, count(*) count
+        from points_adjust sa
+        where sa.tenant_id = #{tenantId}
+        and sa.add_time between #{beginDate} and #{endDate}
+        and sa.points &lt; 0
+        GROUP BY sa.user_id
+    </select>
+    <select id="rewardPoints" resultType="com.yoga.points.adjust.ao.SummaryItem">
+        select sa.user_id, sum(sa.points) points, count(*) count
+        from points_adjust sa
+        where sa.tenant_id = #{tenantId}
+        and sa.add_time between #{beginDate} and #{endDate}
+        and sa.points > 0
+        GROUP BY sa.user_id
+    </select>
+</mapper>

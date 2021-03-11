@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menus>
+	<menu sort = "5" icon = "icon-edit" name = "积分管理" url="">
+		<module code="points_adjust" sort="1" icon="" name="积分管理" url="/admin/points/adjust">
+			<permissions code="points_adjust.update" sort = "1" icon = "" name = "调整"  url = ""/>
+		</module>
+		<module code="points_summary" sort="1" icon="" name="积分统计" url="/admin/points/summary">
+			<permissions code="points_summary.query" sort = "1" icon = "" name = "查询"  url = ""/>
+			<permissions code="points_summary.update" sort = "2" icon = "" name = "刷新"  url = ""/>
+            <permissions code="points_summary.year" sort = "3" icon = "" name = "年度管理"  url = ""/>
+		</module>
+	</menu>
+	<menu sort = "1001" icon = "icon-user" name = "站点选项"  url = "">
+		<module code="gcf_points" sort="5" icon="" name="积分管理" />
+	</menu>
+</menus>
