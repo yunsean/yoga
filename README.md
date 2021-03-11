@@ -13,7 +13,6 @@
   * json：    DateJsonDeserializer, DateJsonSerializer, DateTimeJsonDeserializer, DateTimeJsonSerializer, DateYMDHMJsonDeserializer, DateYMDHMJsonSerializer, TimeJsonDeserializer, TimeJsonSerializer
   * mybatis： IntListTypeHandler, LocalDateTypeHandler, LongArrayTypeHandler, MapperQuery, MyMapper, StringListTypeHandler
   * utils：   AesUtil, ArrayUtil, AssertUtil, ClassUtil, CryptUtil, DateUtil, DateUtils, DefaultUtil, EnumUtil, FreemarkerUtil, HttpUtils, JsonUtil, MapUtil, NumberUtil, ObjectUtil, PinyinUtil, SqlBuilder, StringUtil, TypeCastUtil
-  * 对freemarker的一系列封装
 
 * yoga-logging   基于AOP的日志库，通过注解方式自动记录业务日志
 
@@ -159,6 +158,210 @@
     * 职级存在级别（level），添加职级时按照level进行排序添加，业务系统可使用level进行某些场景的排序（领导排在前面啦）
   * user  用户管理
     * 用户可以数据部门和职级，也可以不属于，而直接赋予角色。
+
+##### freemark封装
+
+在yoga-core/yoga-common中对freemarker进行了一系列封装，以减少编写freemarker时的代码量，同时规格化页面中各个页面的显示风格。
+
+* page.component.ftl：管理页面基础框架，包含页面头定义，脚注定义，框架定义等，典型页面使用：
+
+  ``` xml
+  <#include "/paging.component.ftl">
+  <#include "/form.component.ftl">
+  <#include "/table.component.ftl">
+  <#include "/page.component.ftl">
+  <#include "/input.component.ftl">
+  <#include "/modal.component.ftl">
+  <#setting number_format="##0.##">
+  <@html>
+      <@head includeDate=true includeUploader=true>
+      </@head>
+      <@bodyFrame>
+          <@crumbRoot name="权限管理" icon="icon-user">
+              <@crumbItem href="#" name="用户列表" />
+          </@crumbRoot>
+          <@bodyContent>
+              <@panel>
+                  <@panelHeading "用户列表" />
+                  <@panelBody>
+                      <@inlineForm class="margin-b-15">
+                          <@formLabelGroup class="margin-r-15" label="所属部门">
+                          </@formLabelGroup>
+                          <@inputSubmit text="搜索" icon="icon icon-search" class="btn btn-success"/>
+                          <@rightAction>
+                              <@shiro.hasPermission name="admin_user.add" >
+                                  <@inputButton text="添加" icon="icon-plus" class="btn btn-primary" onclick="doAdd();" />
+                              </@shiro.hasPermission>
+                          </@rightAction>
+                      </@inlineForm>
+                      <@table>
+                          <@thead>
+                              <@tr>
+                                  <@th 7>用户名</@th>
+                                  ...
+                                  <@th 15 true>操作</@th>
+                              </@tr>
+                          </@thead>
+                          <@tbody>
+                            <#list users as operator>
+                                <@tr>
+                                    <@td>${operator.username!}</@td>
+                                    ...
+                                    <@td true>
+                                        <@shiro.hasPermission name="admin_user.update" >
+                                            <a href="javascript:void(0)" onclick="doEdit(${(operator.id?c)!})" class="btn btn-sm btn-info">
+                                                <i class="icon icon-edit"></i>
+                                                编辑
+                                            </a>
+                                        </@shiro.hasPermission>
+                                    </@td>
+                                </@tr>
+                            </#list>
+                          </@tbody>
+                      </@table>
+                  </@panelBody>
+                  <@panelPageFooter action="/admin/operator/user/list" />
+              </@panel>
+          </@bodyContent>
+      </@bodyFrame>
+  
+  <script>
+      ...
+  </script>
+  </@html>
+  ```
+
+* form.component.ftl：表单封装，比如inputForm
+
+* input.component.ftl：常用表单控件，包含input和form两种前缀，比如inputDate代表一个单纯的日期输入空间，而formDate则代表Label和控件的单行组合，通过栅格布局实现了各个控件的显示统一
+
+* modal.component.ftl：弹出框（比如信息编辑）控件，典型使用：
+
+  ``` xml
+      <@modal title="用户编辑" showId="userAddButton" onOk="saveOperator" width=75>
+          <@inputHidden name="id" id="edit_id"/>
+          <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-1 control-label">用户名：</label>
+              <div class="col-sm-4">
+                  <@inputText name="username"/>
+              </div>
+              <label class="col-sm-1 control-label">真实姓名：</label>
+              <div class="col-sm-4">
+                  <@inputText name="nickname"/>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-1 control-label">手机号：</label>
+              <div class="col-sm-4">
+                  <@inputText name="mobile"/>
+              </div>
+              <label class="col-sm-1 control-label">Email：</label>
+              <div class="col-sm-4">
+                  <@inputText name="email"/>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-1 control-label">设置密码：</label>
+              <div class="col-sm-4">
+                  <@inputPassword name="password" id="password" />
+              </div>
+              <#if branches?? && (((branches?size)!0) gt 0)>
+                  <label class="col-sm-1 control-label">所属部门：</label>
+                  <div class="col-sm-4">
+                      <select class="form-control" name="branchId" id="branchId">
+                          <option value="0">未指定</option>
+                          <#list branches! as root>
+                              <@m1_columns root 0 root_index/>
+                          </#list>
+                      </select>
+                  </div>
+              </#if>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-1 control-label">确认密码：</label>
+              <div class="col-sm-4">
+                  <@inputPassword class="col-sm-4" id="repwd"  />
+              </div>
+              <#if roles?? && (((branches?size)!0) gt 0)>
+                  <label class="col-sm-1 control-label">所属职级：</label>
+                  <div class="col-sm-4">
+                      <@inputList options=duties! name="dutyId" blank="未指定" blankValue="0"/>
+                  </div>
+              </#if>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-1 control-label">赋予角色：</label>
+              <input type="hidden" name="roleIds" value="0">
+              <div class="col-sm-8">
+                  <@inputCheckboxGroup options=roles! name="roleIds"/>
+              </div>
+          </div>
+      </@modal>
+  
+  <script>
+      function doAdd() {
+          $("#add_form")[0].reset();
+          $("#add_form input[name='id']").val(0);
+          $("#add_modal").modal("show");
+      }
+      function doEdit(id) {
+          $("#add_form")[0].reset();
+          $.get(
+                  "/admin/operator/user/get.json?id=" + id,
+                  function (data) {
+                      if (parseInt(data.code) < 0) {
+                          alertShow("danger", data.message, 3000);
+                      } else {
+                          $("#add_form input[name='id']").val(id);
+                          $("#add_modal").modal("show");
+                      }
+                  }
+          );
+      }
+  </script>
+  ```
+
+* paging.component.ftl：分页控件，列表分页，固定格式：
+
+  ```xml
+  <@panelPageFooter action="/admin/operator/user/list" />
+  ```
+
+  只需要替换action中的路径为controller的列表RequstMpping，controller中的ModelMap中需要增加page，形如：
+
+  ```java
+  model.put("users", users.getList());
+  model.put("page", new CommonPage(users));
+  ```
+
+* table.component.ftl：表格控件，定义了tr th td宏，典型的如：
+
+  ``` xml
+  <@table>
+    <@thead>
+      <@tr>
+        <@th 7>用户名</@th>
+        ...
+        <@th 15 true>操作</@th>
+        </@tr>
+      </@thead>
+    <@tbody>
+      <#list users as operator>
+        <@tr>
+          <@td>${operator.username!}</@td>
+          ...
+          <@td true>
+            <@shiro.hasPermission name="admin_user.update" >
+              <a href="javascript:void(0)" onclick="doEdit(${(operator.id?c)!})" class="btn btn-sm btn-info">
+                <i class="icon icon-edit"></i>
+                编辑
+              </a>
+              </@shiro.hasPermission>
+            </@td>
+          </@tr>
+        </#list>
+      </@tbody>
+  ```
 
 ##### yoga-business
 
