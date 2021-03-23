@@ -1,0 +1,83 @@
+#web
+server:
+  port: 8100
+  tomcat:
+    uri-encoding: utf-8
+#Logging
+logging:
+  level:
+    root: info
+
+#spring
+spring:
+  profiles:
+    active: local
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        strategy: org.hibernate.cfg.EJB3NamingStrategy
+  freemarker:
+    prefer-file-system-access: false
+    allow-request-override: false
+    allow-session-override: false
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    template-loader-path: classpath:/templates/
+
+---
+spring:
+  profiles: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ikc?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&autoReconnectForPools=true&serverTimezone=CTT
+    username: root
+    password: 12345678
+    dbcp2:
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 3600000
+      validation-query: select 1
+      remove-abandoned: true
+      remove-abandoned-timeout: 60
+  redis:
+    database: 10
+    host: 127.0.0.1
+    port: 6379
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: yoga
+org:
+  quartz:
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/ikc_quartz?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&autoReconnectForPools=true
+      username: root
+      password: 12345678
+
+---
+mybatis:
+  mapper-locations: classpath*:mapper_**/*.xml
+  type-handlers-package: com.yoga.core.mybatis
+  configuration:
+    map-underscore-to-camel-case: true
+    use-column-label: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+app:
+  admin:
+    patchca: false
+    superuser:
+      password: e9353ca20c145b4b2f6773ed1b06efe3
+  file:
+    remote_path: http://127.0.0.1:1088
+    local_path: /tmp
+  system:
+    base_url: http://127.0.0.1
