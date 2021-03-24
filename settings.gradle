@@ -9,7 +9,6 @@ include 'yoga-core:yoga-setting'
 include 'yoga-core:yoga-logging'
 include 'yoga-core:yoga-operator'
 include 'yoga-core:yoga-tenant'
-include 'yoga-core:yoga-netty'
 
 include 'yoga-business:yoga-moment'
 include 'yoga-business:yoga-admin'
