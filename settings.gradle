@@ -13,6 +13,8 @@ include 'yoga-core:yoga-tenant'
 include 'yoga-business:yoga-moment'
 include 'yoga-business:yoga-admin'
 include 'yoga-business:yoga-content'
+include 'yoga-business:yoga-weixinapp'
+include 'yoga-business:yoga-points'
 
 include 'yoga-sms:yoga-sms-eucpsms'
 include 'yoga-sms:yoga-sms-massms'
