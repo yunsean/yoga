@@ -21,4 +21,6 @@ public class UserFilterDto extends BaseDto {
     private String dutyCode;
     @ApiModelProperty(value = "查询大于此级别的用户")
     private Integer levelAbove;
+    @ApiModelProperty(value = "特定权限")
+    private String privilege;
 }

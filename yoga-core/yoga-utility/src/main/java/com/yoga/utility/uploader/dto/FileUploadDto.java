@@ -13,12 +13,14 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 public class FileUploadDto extends BaseDto {
-	@ApiModelProperty("是否调整大小")
+	@ApiModelProperty(value = "是否调整大小")
 	private boolean resize = false;
-	@ApiModelProperty("宽度，resize=true时有效")
+	@ApiModelProperty(value = "宽度，resize=true时有效")
 	private Integer width;
-	@ApiModelProperty("高度，resize=true时有效")
+	@ApiModelProperty(value = "高度，resize=true时有效")
 	private Integer height;
-	@ApiModelProperty("上传文件目的，用于统计显示用")
+	@ApiModelProperty(value = "上传文件目的，用于统计显示用")
 	private String purpose;
+	@ApiModelProperty(value = "文件名")
+	private String filename;
 }

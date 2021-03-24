@@ -14,6 +14,7 @@ import com.yoga.admin.branch.dto.*;
 import com.yoga.operator.branch.model.Branch;
 import com.yoga.operator.branch.service.BranchService;
 import com.yoga.operator.role.service.RoleService;
+import com.yoga.setting.annotation.Settable;
 import com.yoga.setting.customize.CustomPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/operator/branch")
 @Api(tags = "部门管理")
+@Settable(module = BranchService.ModuleName, key = BranchService.Key_MaxLevel, name = "部门管理-最大部门层级", type = int.class, defaultValue = "0")
 public class BranchController extends BaseController {
 
     @Autowired

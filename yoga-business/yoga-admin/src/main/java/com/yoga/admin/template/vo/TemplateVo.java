@@ -10,10 +10,10 @@ import lombok.Data;
 @ApiModel("模板信息")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TemplateVo {
-    @ApiModelProperty("模板ID")
+    @ApiModelProperty(value = "模板ID")
     private long id;
-    @ApiModelProperty("模板名称")
+    @ApiModelProperty(value = "模板名称")
     private String name;
-    @ApiModelProperty("模板描述")
+    @ApiModelProperty(value = "模板描述")
     private String remark;
 }

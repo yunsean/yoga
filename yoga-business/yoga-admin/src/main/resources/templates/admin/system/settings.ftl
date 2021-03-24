@@ -31,7 +31,7 @@
                         <@inputSubmit text="搜索" icon="icon icon-search" class="btn btn-success"/>
                         <@rightAction>
                             <@shiro.hasPermission name="sys_config.update">
-                                <@inputButton text="保存设置" icon="icon-plus" class="btn btn-primary" onclick="doSave();" />
+                                <@inputButton text="保存设置" icon="icon-save" class="btn btn-primary" onclick="doSave();" />
                             </@shiro.hasPermission>
                         </@rightAction>
                     </@inlineForm>
@@ -70,13 +70,15 @@
                                         <input class="setting-item form-control" type="number"
                                                key="${setting.setting.key?if_exists}"
                                                module="${setting.setting.module?if_exists}"
-                                               value="${setting.setting.value?if_exists}">
+                                               value="${setting.setting.value?if_exists}"
+                                               placeholder="${setting.setting.placeHolder?if_exists}">
                                     <#elseif setting.setting.type?? && setting.setting.type.simpleName = 'LocalTime'>
                                         <#assign did=(id=="")?string("${randomInputId()}", id)>
                                         <input class="setting-item form-control" type="text" id="${did}"
                                                key="${setting.setting.key?if_exists}"
                                                module="${setting.setting.module?if_exists}"
                                                value="${setting.setting.value?if_exists}"
+                                               placeholder="${setting.setting.placeHolder?if_exists}"
                                                autocomplete="off">
                                         <script type="text/javascript">
                                             $(document).ready(function () {
@@ -97,6 +99,7 @@
                                                key="${setting.setting.key?if_exists}"
                                                module="${setting.setting.module?if_exists}"
                                                value="${setting.setting.value?if_exists}"
+                                               placeholder="${setting.setting.placeHolder?if_exists}"
                                                autocomplete="off">
                                         <script type="text/javascript">
                                             $(document).ready(function () {
@@ -118,6 +121,7 @@
                                                key="${setting.setting.key?if_exists}"
                                                module="${setting.setting.module?if_exists}"
                                                value="${setting.setting.value?if_exists}"
+                                               placeholder="${setting.setting.placeHolder?if_exists}"
                                                autocomplete="off">
                                         <script type="text/javascript">
                                             $(document).ready(function () {
@@ -164,7 +168,8 @@
                                         <input class="setting-item form-control" type="text"
                                                key="${setting.setting.key?if_exists}"
                                                module="${setting.setting.module?if_exists}"
-                                               value="${setting.setting.value?if_exists}">
+                                               value="${setting.setting.value?if_exists}"
+                                               placeholder="${setting.setting.placeHolder?if_exists}">
                                     </#if>
                                 </td>
                                 <td class="tableCenter">
@@ -193,7 +198,7 @@
                         </tbody>
                     </table>
                 </@panelBody>
-                <@panelPageFooter action="/admin/setting/list" />
+                <@panelPageFooter action="/admin/system/setting/list" />
             </@panel>
         </@bodyContent>
     </@bodyFrame>

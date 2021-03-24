@@ -16,8 +16,8 @@ public class RoleUpdateDto extends BaseDto {
 	@ApiModelProperty(value = "角色ID", required = true)
 	@NotNull(message = "未指定角色ID")
 	private Long id;
-	@ApiModelProperty("新角色名称，不为空则更新")
+	@ApiModelProperty(value = "新角色名称，不为空则更新")
 	private String name;
-	@ApiModelProperty("新角色描述，传值（含空字符串）则更新")
+	@ApiModelProperty(value = "新角色描述，传值（含空字符串）则更新")
 	private String remark;
 }

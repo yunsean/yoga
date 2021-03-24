@@ -124,7 +124,7 @@
     }
     function doPause(name, group) {
         $("#add_form")[0].reset();
-        $.get(
+        $.post(
                 "/admin/setting/quartz/pause.json?name=" + name + "&group=" + group,
                 function (data) {
                     if (parseInt(data.code) < 0) {
@@ -137,7 +137,7 @@
     }
     function doResume(name, group) {
         $("#add_form")[0].reset();
-        $.get(
+        $.post(
                 "/admin/setting/quartz/resume.json?name=" + name + "&group=" + group,
                 function (data) {
                     if (parseInt(data.code) < 0) {

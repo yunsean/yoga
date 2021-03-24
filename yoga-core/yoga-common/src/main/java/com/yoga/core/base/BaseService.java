@@ -27,10 +27,11 @@ public abstract class BaseService {
 	}
 
 	protected <T> T runInLock(String key, LockRunnable<T> runnable) {
+		return runInLock(key, 100, 100, runnable);
+	}
+	protected <T> T runInLock(String key, int lockTime, int waitTime, LockRunnable<T> runnable) {
 		try {
-			return redisLocker.lock(key, ()-> {
-				return runnable.run();
-			});
+			return redisLocker.lock(key, lockTime, waitTime, runnable::run);
 		} catch (BusinessException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -38,8 +39,11 @@ public abstract class BaseService {
 		}
 	}
 	protected void runInLock(String key, Runnable runnable) {
+		runInLock(key, 100, 100, runnable);
+	}
+	protected void runInLock(String key, int lockTime, int waitTime, Runnable runnable) {
 		try {
-			redisLocker.lock(key, ()-> {
+			redisLocker.lock(key, lockTime, waitTime, ()-> {
 				runnable.run();
 				return true;
 			});

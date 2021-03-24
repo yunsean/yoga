@@ -9,6 +9,7 @@ import com.yoga.core.base.BaseDto;
 import com.yoga.core.data.*;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.exception.IllegalArgumentException;
+import com.yoga.core.utils.StringUtil;
 import com.yoga.operator.branch.model.Branch;
 import com.yoga.operator.branch.service.BranchService;
 import com.yoga.operator.duty.service.DutyService;
@@ -152,7 +153,9 @@ public class UserController extends BaseController {
     @GetMapping("/filter.json")
     public ApiResults<FilterUserVo> users(CustomPage page, @Valid @ModelAttribute UserFilterDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
-        PageInfo<User> users = userService.list(dto.getTid(), dto.getFilter(), dto.getBranchId(), dto.getDutyId(), dto.getDutyCode(), dto.getLevelAbove(), null, page.getPageIndex(), page.getPageSize());
+        PageInfo<User> users;
+        if (StringUtil.isBlank(dto.getPrivilege())) users = userService.list(dto.getTid(), dto.getFilter(), dto.getBranchId(), dto.getDutyId(), dto.getDutyCode(), dto.getLevelAbove(), null, page.getPageIndex(), page.getPageSize());
+        else users = userService.listOfPrivilege(dto.getTid(), dto.getPrivilege(), dto.getFilter(), dto.getBranchId(), dto.getDutyId(), dto.getDutyCode(), dto.getLevelAbove(), null, page.getPageIndex(), page.getPageSize());
         return new ApiResults<>(users, FilterUserVo.class);
     }
     @ResponseBody

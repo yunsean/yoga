@@ -52,6 +52,7 @@ public class UploadService extends BaseService {
         String now = DateUtil.format(new Date(), "yyyyMMddHHmmssSSS");
         String parentPath = propertiesService.getFileLocalPath(tenantId);
         new File(parentPath).mkdirs();
+        if (name == null) name = "";
         while (true) {
             int dot = name.lastIndexOf('.');
             String base = (dot == -1) ? name : name.substring(0, dot);

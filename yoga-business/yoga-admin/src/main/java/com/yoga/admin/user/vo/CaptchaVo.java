@@ -20,8 +20,8 @@ import java.util.Date;
 @ApiModel("验证码发送结果")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CaptchaVo {
-    @ApiModelProperty("验证码存根")
+    @ApiModelProperty(value = "验证码存根")
     private String uuid;
-    @ApiModelProperty("短信验证码")
+    @ApiModelProperty(value = "短信验证码")
     private String captcha;
 }

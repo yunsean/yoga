@@ -46,6 +46,10 @@ public class BranchCache extends BaseCache {
     public List<Branch> childrenOf(long tenantId, long parentId, boolean containSelf) {
         return branchMapper.childrenOf(tenantId, parentId, containSelf);
     }
+    @Cacheable(value = "branch", keyGenerator = "wiselyKeyGenerator")
+    public List<Branch> parentOf(long tenantId, long childId, boolean containSelf) {
+        return branchMapper.parentOf(tenantId, childId, containSelf);
+    }
 
     public void clearCache(long tenantId) {
         this.redisOperator.remove("branch::nameMap:" + tenantId);

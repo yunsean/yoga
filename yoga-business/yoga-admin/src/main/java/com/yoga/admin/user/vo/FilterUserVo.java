@@ -18,4 +18,6 @@ public class FilterUserVo {
 	private String nickname;
 	private String branch;
 	private String duty;
+	private Integer level;
+	private String avatar;
 }

@@ -16,13 +16,13 @@ public class UserOfPrivilegeDto extends BaseDto {
     @ApiModelProperty(value = "权限编码", required = true)
     @NotBlank(message = "请指定权限")
     private String privilege;
-    @ApiModelProperty("用户名或者姓名部分字段")
+    @ApiModelProperty(value = "用户名或者姓名部分字段")
     private String filter;
-    @ApiModelProperty("查询人所在部门")
+    @ApiModelProperty(value = "查询人所在部门")
     private Long branchId;
-    @ApiModelProperty("查询人所属职级")
+    @ApiModelProperty(value = "查询人所属职级")
     private Long dutyId;
-    @ApiModelProperty("查询人所属职级编码")
+    @ApiModelProperty(value = "查询人所属职级编码")
     private String dutyCode;
     @ApiModelProperty(value = "查询大于此级别的用户")
     private Integer levelAbove;

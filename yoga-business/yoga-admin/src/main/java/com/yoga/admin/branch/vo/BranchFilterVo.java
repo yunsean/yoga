@@ -12,10 +12,10 @@ import java.util.List;
 @ApiModel("部门信息")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BranchFilterVo {
-    @ApiModelProperty("部门ID")
+    @ApiModelProperty(value = "部门ID")
     private long id;
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称")
     private String name;
-    @ApiModelProperty("部门描述")
+    @ApiModelProperty(value = "部门描述")
     private String remark;
 }

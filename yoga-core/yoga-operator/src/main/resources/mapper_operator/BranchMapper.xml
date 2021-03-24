@@ -22,4 +22,16 @@
         </if>
         )
     </select>
+    <select id="parentOf" resultType="com.yoga.operator.branch.model.Branch">
+        SELECT T2.*
+        FROM (SELECT @r AS _id, (SELECT @r := parent_id FROM operator_branch WHERE id = _id) AS parent_id, @l := @l + 1 AS lvl
+        FROM (SELECT @r := #{childId}, @l := 0) vars, operator_branch h
+        WHERE @r != 0) T1
+        JOIN operator_branch T2 ON T1._id = T2.id
+        where T2.tenant_id = #{tenantId}
+        <if test="!containSelf">
+            and T2.id != #{childId}
+        </if>
+        ORDER BY T1.lvl DESC
+    </select>
 </mapper>

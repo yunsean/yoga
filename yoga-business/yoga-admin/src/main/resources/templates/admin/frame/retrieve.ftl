@@ -1,9 +1,6 @@
-<!-- BEGIN HEAD -->
-<#import "/macro_common.ftl" as macroCommon>
-<!DOCTYPE html>
-<html>
-<@macroCommon.html/>
-<head>
+<#include "/page.component.ftl">
+<@html>
+<@head>
     <link href="/css/zui.min.css" rel="stylesheet">
     <style>
         html {
@@ -92,8 +89,8 @@
             color: #ffffff;
         }
     </style>
-</head>
-<body>
+</@head>
+<@body>
 <div class="mainContainer">
     <div class="picContainer">
         <img src="${img.loginBg}" alt="请添加LoginImg.bg">
@@ -142,11 +139,8 @@
             </div>
         </div>
     </div>
-    <footer class="main-footer">
-    <@common.footer />
-    </footer>
 </div>
-</body>
+</@body>
 <script>
     function doSubmit() {
         var mobile = $("#mobile").val();
@@ -158,7 +152,7 @@
             alertShow("warning", "两次输入的密码不一致！", 3000);
             return;
         }
-        $.post("/api/auth/retrieve",
+        $.post("/admin/auth/retrieve.json",
                 {
                     mobile: mobile,
                     uuid: uuid,
@@ -180,8 +174,7 @@
             alertShow("warning", "请输入手机号！", 3000);
             return;
         }
-        $.post("/api/auth/captcha",
-                {mobile: mobile},
+        $.get("/admin/auth/captcha.json?mobile=" + mobile,
                 function (data) {
                     if (data.code < 0) {
                         alertShow("danger", data.message, 3000);
@@ -194,4 +187,4 @@
         )
     }
 </script>
-</html>
+</@html>

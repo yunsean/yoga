@@ -13,23 +13,23 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TemplateFieldVo {
 
-	@ApiModelProperty("字段ID")
+	@ApiModelProperty(value = "字段ID")
 	private Long id;
-	@ApiModelProperty("字段名称")
+	@ApiModelProperty(value = "字段名称")
 	private String name;
-	@ApiModelProperty("字段编码")
+	@ApiModelProperty(value = "字段编码")
 	private String code;
-	@ApiModelProperty("字段类型")
+	@ApiModelProperty(value = "字段类型")
 	private FieldType type;
-	@ApiModelProperty("字段取值")
+	@ApiModelProperty(value = "字段取值")
 	private String param;
-	@ApiModelProperty("字段提示")
+	@ApiModelProperty(value = "字段提示")
 	private String hint;
-	@ApiModelProperty("字段描述")
+	@ApiModelProperty(value = "字段描述")
 	private String remark;
-	@ApiModelProperty("缺省值")
+	@ApiModelProperty(value = "缺省值")
 	private String placeholder;
-	@ApiModelProperty("是否启用")
+	@ApiModelProperty(value = "是否启用")
 	private Boolean enabled;
 }
 

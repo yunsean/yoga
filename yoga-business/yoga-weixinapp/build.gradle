@@ -7,10 +7,11 @@ dependencies {
     implementation project (':yoga-core:yoga-utility')
     implementation project (':yoga-core:yoga-operator')
 
+    implementation project (':yoga-business:yoga-admin')
+
     implementation libraries['quartz']
     implementation libraries['quartz-jobs']
 
-    implementation project (':yoga-business:yoga-admin')
     implementation libraries['okhttp3']
     implementation 'com.squareup.retrofit2:converter-jaxb:2.5.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'

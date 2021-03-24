@@ -37,7 +37,7 @@
                             <option value="50"<#if (page.pageSize)! == 50>selected="selected"</#if>>&nbsp;50条/页</option>
                         </select>
                     </div>                    &nbsp;&nbsp;
-                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-search"></i>搜索
+                    <button type="submit" class="btn btn-success"><i class="icon icon-search"></i>搜索
                     </button>
                 </form>
                 <@rightAction>

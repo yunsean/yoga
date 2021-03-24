@@ -17,43 +17,43 @@ import java.util.List;
 @ApiModel("管理员信息")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserVo {
-    @ApiModelProperty("管理员")
+    @ApiModelProperty(value = "管理员")
     private Long id;
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名")
     private String username;
-    @ApiModelProperty("部门ID")
+    @ApiModelProperty(value = "部门ID")
     private Long branchId;
-    @ApiModelProperty("职级ID")
+    @ApiModelProperty(value = "职级ID")
     private Long dutyId;
-    @ApiModelProperty("昵称")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别")
     @Enumerated(EnumType.STRING)
     private GenderType gender;
-    @ApiModelProperty("称谓")
+    @ApiModelProperty(value = "称谓")
     private String title;
-    @ApiModelProperty("头像URL")
+    @ApiModelProperty(value = "头像URL")
     private String avatar;
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号")
     private String mobile;
-    @ApiModelProperty("Email")
+    @ApiModelProperty(value = "Email")
     private String email;
-    @ApiModelProperty("联系地址")
+    @ApiModelProperty(value = "联系地址")
     private String address;
-    @ApiModelProperty("邮编")
+    @ApiModelProperty(value = "邮编")
     private String postcode;
-    @ApiModelProperty("公司")
+    @ApiModelProperty(value = "公司")
     private String company;
-    @ApiModelProperty("出生日期")
+    @ApiModelProperty(value = "出生日期")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthday")
     private Date birthday;
-    @ApiModelProperty("部门")
+    @ApiModelProperty(value = "部门")
     private String branch;
-    @ApiModelProperty("职级")
+    @ApiModelProperty(value = "职级")
     private String duty;
-    @ApiModelProperty("职级")
+    @ApiModelProperty(value = "职级")
     private Integer level;
-    @ApiModelProperty("授予角色")
+    @ApiModelProperty(value = "授予角色")
     private List<Long> roleIds;
 }

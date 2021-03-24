@@ -87,7 +87,7 @@
                     <div class="titleMenu">
                         <div class="totalTitle">
                             <span>
-                                <i class="fa fa-fw fa-list"></i>选项列表
+                                <i class="icon icon-list"></i>选项列表
                             </span>
                         </div>
                         <div class="totalControl">

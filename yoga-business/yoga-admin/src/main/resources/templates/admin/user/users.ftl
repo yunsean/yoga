@@ -77,7 +77,7 @@
                                     <@td true>${operator.duty!}</@td>
                                 </#if>
                                 <@td>${operator.roles!}</@td>
-                                <@td true>${(operator.lastLogin?string('yyyy-MM-dd HH:mm'))!}</@td>
+                                <@td true>${(operator.lastLogin?string('yyyy-MM-dd HH:mm:ss'))!}</@td>
                                 <@td true>
                                     <@shiro.hasPermission name="admin_user.update" >
                                         <a href="javascript:void(0)" onclick="doEdit(${(operator.id?c)!})" class="btn btn-sm btn-info">

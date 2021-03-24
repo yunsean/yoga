@@ -33,7 +33,7 @@ public class CaptchaController extends BaseController {
     @ApiIgnore
     @Settable(module = CaptchaService.ModuleName, key = CaptchaService.Key_Config, name = "通知设置-短信验证码设置")
     @GetMapping("")
-    public String defaultRegDept(ModelMap model, @Valid BaseDto dto, BindingResult bindingResult) {
+    public String showSetting(ModelMap model, @Valid BaseDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         CaptchaSetting setting = captchaService.getSetting(dto.getTid());
         if (setting == null) setting = new CaptchaSetting();

@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ZuiUploadDto extends BaseDto {
-	@ApiModelProperty("是否调整大小")
+	@ApiModelProperty(value = "是否调整大小")
 	private boolean resize = false;
-	@ApiModelProperty("宽度，resize=true必填")
+	@ApiModelProperty(value = "宽度，resize=true必填")
 	private int width;
-	@ApiModelProperty("高度，resize=true必填")
+	@ApiModelProperty(value = "高度，resize=true必填")
 	private int height;
-	@ApiModelProperty("上传文件目的，用于统计显示用")
+	@ApiModelProperty(value = "上传文件目的，用于统计显示用")
 	private String purpose;
 }

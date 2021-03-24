@@ -2,10 +2,9 @@ version '1.0.0'
 
 subprojects {
 	dependencies {
-		implementation project (':yoga-core:yoga-common')
-		implementation project (':yoga-core:yoga-setting')
-		implementation project (':yoga-core:yoga-logging')
-		implementation project (':yoga-core:yoga-utility')
-		implementation project (':yoga-core:yoga-operator')
+		implementation project(':yoga-core:yoga-common')
+		implementation project(':yoga-core:yoga-logging')
+		implementation project(':yoga-core:yoga-setting')
+		implementation project(':yoga-core:yoga-utility')
 	}
 }

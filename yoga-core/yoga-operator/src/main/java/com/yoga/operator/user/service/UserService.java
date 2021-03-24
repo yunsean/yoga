@@ -212,7 +212,7 @@ public class UserService extends BaseService implements LoggingPrimaryHandler {
     }
 
     public boolean isLogonUseCaptcha(long tenantId) {
-        return settingService.get(tenantId, "gcf_user_logon", Key_LogonUseCaptcha, false);
+        return settingService.get(tenantId, ModuleName, Key_LogonUseCaptcha, false);
     }
 
     public List<User> listUserByChildBranchAndLessDuty(long tenantId, Long childBranchId, long lessDutyId) {
@@ -250,6 +250,14 @@ public class UserService extends BaseService implements LoggingPrimaryHandler {
         String pwd = DigestUtils.md5Hex(password);
         String savedPwd = user.getPassword();
         if (null == savedPwd || !savedPwd.equals(pwd)) throw new BusinessException("用户不存在或者密码错误！");
+        user.setLastLogin(new Date());
+        userMapper.updateByPrimaryKey(user);
+        return user;
+    }
+    @Transactional
+    public User login(long tenantId, long id) {
+        User user = userMapper.get(tenantId, id);
+        if (user == null) throw new BusinessException("用户不存在或者密码错误！");
         user.setLastLogin(new Date());
         userMapper.updateByPrimaryKey(user);
         return user;

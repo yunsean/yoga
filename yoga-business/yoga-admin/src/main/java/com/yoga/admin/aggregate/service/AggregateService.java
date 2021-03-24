@@ -5,6 +5,8 @@ import com.yoga.core.spring.SpringContext;
 import com.yoga.admin.aggregate.ao.Schedule;
 import com.yoga.admin.aggregate.ao.Statement;
 import com.yoga.admin.aggregate.ao.Todo;
+import com.yoga.tenant.tenant.model.TenantSetting;
+import com.yoga.tenant.tenant.service.TenantService;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 @Service
 public class AggregateService extends BaseService {
 
+    @Autowired
+    private TenantService tenantService;
     @Autowired
     private SpringContext springContext;
     private List<AggregateActor> aggregateActors = new ArrayList<>();
@@ -79,13 +83,14 @@ public class AggregateService extends BaseService {
         return statements;
     }
     public List<Todo> getTodos(long tenantId, long userId) {
-        Set<String> permissions = (Set<String>) SecurityUtils.getSubject().getSession().getAttribute("permissions");
-        if (permissions == null) permissions = new HashSet<>();
-        Set<String> modules = permissions.stream().map(permission-> {
-            int index = permission.indexOf('.');
-            if (index > 0) return permission.substring(0, index);
-            else return permission;
-        }).collect(Collectors.toSet());
+        Set<String> modules = Arrays.stream(tenantService.getModules(tenantId)).collect(Collectors.toSet());
+//        Set<String> permissions = (Set<String>) SecurityUtils.getSubject().getSession().getAttribute("permissions");
+//        if (permissions == null) permissions = new HashSet<>();
+//        Set<String> modules = permissions.stream().map(permission-> {
+//            int index = permission.indexOf('.');
+//            if (index > 0) return permission.substring(0, index);
+//            else return permission;
+//        }).collect(Collectors.toSet());
         List<Todo> todos = new ArrayList<>();
         aggregateActors.forEach(actor-> {
             List<Todo> adds = actor.getTodos(tenantId, userId, modules);

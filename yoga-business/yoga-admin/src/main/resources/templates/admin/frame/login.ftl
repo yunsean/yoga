@@ -138,7 +138,7 @@
                         </div>
                         <div id="login_error" style="color:red; text-align:center; margin-bottom:5px; float: right;">${error!}</div>
                         <div class="login_button">
-                            <button class="btn btn-block  btn-info" id="login">登录</button>
+                            <button class="btn btn-block  btn-info" id="login" style="padding: 5px 12px">登录</button>
                         </div>
                     </div>
                 </form>

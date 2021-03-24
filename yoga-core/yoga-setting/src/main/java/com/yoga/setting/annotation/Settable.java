@@ -18,5 +18,6 @@ public @interface Settable {
     boolean systemOnly() default false;
     boolean showPage() default false;     //点击配置按钮是否在新的页面（而不是弹出框）中打开
     String defaultValue() default "";
+    String placeHolder() default "";
     String url() default "";
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 public class FileGetDto extends BaseDto {
-	@ApiModelProperty("文件ID")
+	@ApiModelProperty(value = "文件ID")
 	@NotNull(message = "文件ID不能为空")
 	private Long fileId;
 }

@@ -50,9 +50,9 @@ public class CommonPage implements Serializable {
 		}
 	}
 
-	@ApiModelProperty("分页页码，采用计算机序数，从0开始，默认为0")
+	@ApiModelProperty(value = "分页页码，采用计算机序数，从0开始，默认为0")
 	private int pageIndex = 0;
-	@ApiModelProperty("分页大小，默认由参数设置")
+	@ApiModelProperty(value = "分页大小，默认由参数设置")
 	private int pageSize = 0;
 	@ApiModelProperty(hidden = true)
 	private int pageCount = 0;

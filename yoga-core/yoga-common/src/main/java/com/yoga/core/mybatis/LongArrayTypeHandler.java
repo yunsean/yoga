@@ -1,5 +1,7 @@
 package com.yoga.core.mybatis;
 
+import com.yoga.core.utils.NumberUtil;
+import com.yoga.core.utils.StringUtil;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -27,16 +29,16 @@ public class LongArrayTypeHandler extends BaseTypeHandler<List<Long>> {
     @Override
     public List<Long> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String code = rs.getString(columnName);
-        return rs.wasNull() ? null : Arrays.stream(code.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        return (rs.wasNull() || StringUtil.isBlank(code)) ? null : Arrays.stream(code.split(",")).map(NumberUtil::optLong).collect(Collectors.toList());
     }
     @Override
     public List<Long> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String code = rs.getString(columnIndex);
-        return rs.wasNull() ? null : Arrays.stream(code.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        return (rs.wasNull() || StringUtil.isBlank(code)) ? null : Arrays.stream(code.split(",")).map(NumberUtil::optLong).collect(Collectors.toList());
     }
     @Override
     public List<Long> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String code = cs.getString(columnIndex);
-        return cs.wasNull() ? null : Arrays.stream(code.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        return (cs.wasNull() || StringUtil.isBlank(code)) ? null : Arrays.stream(code.split(",")).map(NumberUtil::optLong).collect(Collectors.toList());
     }
 }

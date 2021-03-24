@@ -49,7 +49,7 @@ public class PropertiesService {
         return localUrl;
     }
 
-    @Value("${app.nginx.pdfviewer_url:/pdf.js/web/viewer.html}")
+    @Value("${app.nginx.pdfviewer_url:/admin/pdf.js/web/viewer.html}")
     private String pdfViewerUrl;
     public String getPdfViewerUrl() {
         return pdfViewerUrl;

@@ -4,11 +4,13 @@ import com.yoga.admin.quartz.dto.QuartzGetDto;
 import com.yoga.admin.quartz.dto.QuartzUpdateDto;
 import com.yoga.admin.quartz.vo.QuartzTaskVo;
 import com.yoga.core.base.BaseController;
+import com.yoga.core.base.BaseDto;
 import com.yoga.core.data.ApiResult;
 import com.yoga.core.data.ApiResults;
 import com.yoga.core.data.ChainMap;
 import com.yoga.core.data.MapConverter;
 import com.yoga.core.exception.IllegalArgumentException;
+import com.yoga.tenant.tenant.service.TenantService;
 import com.yoga.utility.quartz.QuartzService;
 import com.yoga.utility.quartz.QuartzTask;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApiIgnore
 @Controller
@@ -32,11 +37,18 @@ public class QuartzController extends BaseController {
 
     @Autowired
     private QuartzService quartzService;
+    @Autowired
+    private TenantService tenantService;
 
     @RequestMapping("/list")
     @RequiresPermissions("cfg_quartz")
-    public String list(ModelMap model) {
+    public String list(ModelMap model, BaseDto dto) {
+        String[] modules = tenantService.getModules(dto.getTid());
         List<QuartzTask> quartzTasks = quartzService.list();
+        if (quartzTasks != null) {
+            Set<String> allModules = Arrays.stream(modules).collect(Collectors.toSet());
+            quartzTasks = quartzTasks.stream().filter(it-> allModules.contains(it.getGroup())).collect(Collectors.toList());
+        }
         model.put("tasks", quartzTasks);
         return "/admin/system/quartz";
     }

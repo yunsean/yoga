@@ -12,12 +12,12 @@ import java.util.List;
 @ApiModel("职级信息")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Duty2Vo {
-    @ApiModelProperty("职级ID")
+    @ApiModelProperty(value = "职级ID")
     private long id;
-    @ApiModelProperty("职级名称")
+    @ApiModelProperty(value = "职级名称")
     private String name;
-    @ApiModelProperty("职级编码")
+    @ApiModelProperty(value = "职级编码")
     private String code;
-    @ApiModelProperty("职级描述")
+    @ApiModelProperty(value = "职级描述")
     private String remark;
 }

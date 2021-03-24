@@ -18,6 +18,7 @@ public class SettableItem{
     private boolean showPage;
     private Class type;
     private String defValue;
+    private String placeHolder;
 
     public SettableItem(Settable settable, String url) {
         this.module = settable.module();
@@ -30,6 +31,7 @@ public class SettableItem{
         this.showPage = settable.showPage();
         this.type = settable.type();
         this.defValue = settable.defaultValue();
+        this.placeHolder = settable.placeHolder();
         if (this.module == null) this.module = "";
         if (this.key == null) this.key = "";
         if (this.name == null) this.name = "";
@@ -45,6 +47,7 @@ public class SettableItem{
         this.systemOnly = src.systemOnly;
         this.showPage = src.showPage;
         this.defValue = src.defValue;
+        this.placeHolder = src.placeHolder;
         this.type = src.type;
     }
     public String getModule() {
@@ -85,6 +88,9 @@ public class SettableItem{
     }
     public String getDefValue() {
         return defValue;
+    }
+    public String getPlaceHolder() {
+        return placeHolder;
     }
 
     public boolean matchFilter(String filter) {

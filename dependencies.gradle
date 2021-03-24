@@ -11,7 +11,9 @@ ext.versions = [
     redisson                                : '3.10.7',
     gson                                    : '2.8.5',
     kotlin                                  : '1.1.1',
-    swagger                                 : '2.6.1'
+    swagger                                 : '2.6.1',
+    shiro                                   : '1.7.0',
+    retrofit                                : '2.5.0'
 ]
 
 // 各种可能会用到的jar包
@@ -67,10 +69,10 @@ ext.libraries = [
     "fastjson"                              : "com.alibaba:fastjson:1.2.16",
     "gson"                                  : "com.google.code.gson:gson:${versions.gson}",
 
-    "shiro-core"                            : "org.apache.shiro:shiro-core:1.2.3",
-    "shiro-spring"                          : "org.apache.shiro:shiro-spring:1.2.3",
-    "shiro-web"                             : "org.apache.shiro:shiro-web:1.2.3",
-    "shiro-ehcache"                         : "org.apache.shiro:shiro-ehcache:1.2.3",
+    "shiro-core"                            : "org.apache.shiro:shiro-core:${versions.shiro}",
+    "shiro-spring"                          : "org.apache.shiro:shiro-spring:${versions.shiro}",
+    "shiro-web"                             : "org.apache.shiro:shiro-web:${versions.shiro}",
+    "shiro-ehcache"                         : "org.apache.shiro:shiro-ehcache:${versions.shiro}",
 
     "retrofit"                              : "com.squareup.retrofit2:retrofit:2.5.0",
     "converter-gson"                        : "com.squareup.retrofit2:converter-gson:2.1.0",
@@ -93,5 +95,10 @@ ext.libraries = [
     "echarts"                               : "com.github.abel533:ECharts:3.0.0.3",
 
     "springfox-swagger2"                    : "io.springfox:springfox-swagger2:${versions.swagger}",
-    "springfox-swagger-ui"                  : "io.springfox:springfox-swagger-ui:${versions.swagger}"
+    "springfox-swagger-ui"                  : "io.springfox:springfox-swagger-ui:${versions.swagger}",
+
+    "converter-jaxb"                        : "com.squareup.retrofit2:converter-jaxb:${versions.retrofit}",
+    "converter-scalars"                     : "com.squareup.retrofit2:converter-scalars:${versions.retrofit}",
+    "adapter-rxjava2"                       : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+    "retrofit"                              : "com.squareup.retrofit2:retrofit:${versions.retrofit}"
 ]

@@ -43,11 +43,13 @@ public class FileUploadController extends BaseController {
     public ApiResult<UploadFileVo> upload(@Valid @ModelAttribute FileUploadDto dto, @ModelAttribute("file") @RequestParam(value = "file", required = true) MultipartFile file, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         try {
-            File destFile = uploadService.generateFilePath(dto.getTid(), file.getOriginalFilename());
+            String filename = dto.getFilename();
+            if (StringUtil.isBlank(filename)) filename = file.getOriginalFilename();
+            File destFile = uploadService.generateFilePath(dto.getTid(), filename);
             FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
             String path = destFile.getPath();
             if (dto.isResize()) path = uploadService.resize(path, dto.getWidth(), dto.getHeight());
-            UploadFile uploadFile = uploadService.add(dto.getTid(), destFile.getName(), path, dto.getPurpose(), null, null);
+            UploadFile uploadFile = uploadService.add(dto.getTid(), filename, path, dto.getPurpose(), null, null);
             return new ApiResult<>(new UploadFileVo(uploadFile.getId(), uploadFile.getFileSize(), uploadFile.getRemoteUrl(), uploadFile.getFilename(), uploadFile.getContentType()));
         } catch (Exception ex) {
             ex.printStackTrace();

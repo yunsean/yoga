@@ -12,4 +12,5 @@ import java.util.List;
 public interface BranchMapper extends MyMapper<Branch> {
     List<Branch> list(@Param("tenantId") long tenantId);
     List<Branch> childrenOf(@Param("tenantId") long tenantId, @Param("parentId") long parentId, @Param("containSelf") boolean containSelf);
+    List<Branch> parentOf(@Param("tenantId") long tenantId, @Param("childId") long childId, @Param("containSelf") boolean containSelf);
 }

@@ -12,25 +12,25 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ColumnVo {
 
-    @ApiModelProperty("栏目ID")
+    @ApiModelProperty(value = "栏目ID")
     private Long id;
-    @ApiModelProperty("栏目编码")
+    @ApiModelProperty(value = "栏目编码")
     private String code;
-    @ApiModelProperty("栏目名称")
+    @ApiModelProperty(value = "栏目名称")
     private String name;
-    @ApiModelProperty("父栏目ID")
+    @ApiModelProperty(value = "父栏目ID")
     private Long parentId;
-    @ApiModelProperty("是否启用")
+    @ApiModelProperty(value = "是否启用")
     private Boolean enabled;
-    @ApiModelProperty("模板ID")
+    @ApiModelProperty(value = "模板ID")
     private Long templateId;
-    @ApiModelProperty("文章数量")
+    @ApiModelProperty(value = "文章数量")
     private Integer articleCount;
-    @ApiModelProperty("栏目描述")
+    @ApiModelProperty(value = "栏目描述")
     private String remark;
-    @ApiModelProperty("是否从列表隐藏")
+    @ApiModelProperty(value = "是否从列表隐藏")
     private Boolean hidden;
-    @ApiModelProperty("子栏目数量")
+    @ApiModelProperty(value = "子栏目数量")
     private Integer childrenCount;
 }
 

@@ -260,6 +260,12 @@ public class SettingService extends BaseService implements LoggingPrimaryHandler
             return null;
         }
     }
+    public List<Setting> list(String module, String key) {
+        return new MapperQuery<>(Setting.class)
+                .andEqualTo("module", module)
+                .andEqualTo("key", key)
+                .query(settingMapper);
+    }
     public int getPageSize(long tenantId) {
         Integer pageSize = get(tenantId, ModuleName, Key_PageSize, Integer.class);
         return pageSize == null ? 30 : pageSize;

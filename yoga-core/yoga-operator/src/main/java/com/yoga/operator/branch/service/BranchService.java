@@ -37,6 +37,7 @@ public class BranchService extends BaseService implements LoggingPrimaryHandler 
 
     public final static String ModuleName = "admin_branch";
     public final static String Key_LogonBranch = "branch.logon.id";
+    public final static String Key_MaxLevel = "branch.max.level";
 
     @Override
     public String getPrimaryInfo(Object primaryId) {
@@ -57,6 +58,11 @@ public class BranchService extends BaseService implements LoggingPrimaryHandler 
         if (parentId != 0) {
             Branch parent = branchMapper.selectByPrimaryKey(parentId);
             if (parent == null) throw new BusinessException("父级部门不存在！");
+            int maxLevel = getMaxLevel(tenantId);
+            if (maxLevel > 0) {
+                List<Branch> parents = branchMapper.parentOf(tenantId, parentId, true);
+                if (parents.size() >= maxLevel) throw new BusinessException("最多只允许创建" + maxLevel + "级部门！");
+            }
         }
 
         Branch branch = new Branch(tenantId, name, remark, parentId);
@@ -142,6 +148,20 @@ public class BranchService extends BaseService implements LoggingPrimaryHandler 
     public List<Branch> childrenOf(long tenantId, long id, boolean containSelf) {
         return branchCache.childrenOf(tenantId, id, containSelf);
     }
+    public List<Long> childrenIdOf(long tenantId, long id, boolean containSelf) {
+        List<Branch> branches = childrenOf(tenantId, id, containSelf);
+        List<Long> ids = branches == null ? new ArrayList<>() : branches.stream().map(Branch::getId).collect(Collectors.toList());
+        return ids;
+    }
+    public List<Branch> parentOf(long tenantId, long id, boolean containSelf) {
+        return branchCache.parentOf(tenantId, id, containSelf);
+    }
+    public List<Long> parentIdOf(long tenantId, long id, boolean containSelf, boolean addZero) {
+        List<Branch> branches = parentOf(tenantId, id, containSelf);
+        List<Long> ids = branches == null ? new ArrayList<>() : branches.stream().map(Branch::getId).collect(Collectors.toList());
+        if (addZero) ids.add(0L);
+        return ids;
+    }
 
     public List<Long> listRoles(long tenantId, long id){
         return privilegeService.getBranchRoleIds(tenantId, id);
@@ -154,5 +174,10 @@ public class BranchService extends BaseService implements LoggingPrimaryHandler 
     }
     public void setLogonBranch(long tenantId, Long deptId, String deptName) {
         settingService.save(tenantId, ModuleName, Key_LogonBranch, String.valueOf(deptId), deptName);
+    }
+    public int getMaxLevel(Long tenatnId){
+        Number number = settingService.get(tenatnId, ModuleName, Key_MaxLevel, Integer.class);
+        if (number == null) return 0;
+        else return number.intValue();
     }
 }

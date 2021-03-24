@@ -39,7 +39,7 @@
         and u.tenant_id = #{tenantId} and u.deleted = false
     </select>
     <select id="listUserOfPrivilege" resultType="com.yoga.operator.user.model.User">
-        select * from (select u.*, d.name duty, b.name branch, d.`level`
+        select * from (select u.*, d.name duty, b.name branch, IFNULL(d.`level`, 0) level
         FROM operator_user u
         LEFT JOIN operator_branch b ON b.id = u.branch_id
         LEFT JOIN operator_duty d ON d.id = u.duty_id
@@ -59,12 +59,12 @@
             and d.code = #{dutyCode}
         </if>
         <if test="levelAbove != null">
-            and d.level > #{levelAbove}
+            and IFNULL(d.level, 0) > #{levelAbove}
         </if>
 
         union
 
-        select u.*, d.name duty, b.name branch, d.`level`
+        select u.*, d.name duty, b.name branch, IFNULL(d.`level`, 0) level
         FROM operator_user u
         LEFT JOIN operator_branch b ON b.id = u.branch_id
         LEFT JOIN operator_duty d ON d.id = u.duty_id
@@ -84,12 +84,12 @@
             and d.code = #{dutyCode}
         </if>
         <if test="levelAbove != null">
-            and d.level > #{levelAbove}
+            and IFNULL(d.level, 0) > #{levelAbove}
         </if>
 
         union
 
-        select u.*, d.name duty, b.name branch, d.`level`
+        select u.*, d.name duty, b.name branch, IFNULL(d.`level`, 0) level
         FROM operator_user u
         LEFT JOIN operator_branch b ON b.id = u.branch_id
         LEFT JOIN operator_duty d ON d.id = u.duty_id
@@ -109,7 +109,7 @@
             and d.code = #{dutyCode}
         </if>
         <if test="levelAbove != null">
-            and d.level > #{levelAbove}
+            and IFNULL(d.level, 0) > #{levelAbove}
         </if>
 
         ) rr

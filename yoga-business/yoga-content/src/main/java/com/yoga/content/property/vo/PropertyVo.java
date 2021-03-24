@@ -18,16 +18,16 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PropertyVo {
 
-	@ApiModelProperty("分类ID")
+	@ApiModelProperty(value = "分类ID")
 	private Long id;
-	@ApiModelProperty("分类编码")
+	@ApiModelProperty(value = "分类编码")
 	private String code;
-	@ApiModelProperty("分类名称")
+	@ApiModelProperty(value = "分类名称")
 	private String name;
-	@ApiModelProperty("父ID")
+	@ApiModelProperty(value = "父ID")
 	private Long parentId;
-	@ApiModelProperty("图标")
+	@ApiModelProperty(value = "图标")
 	private String poster;
-	@ApiModelProperty("子节点")
+	@ApiModelProperty(value = "子节点")
 	private List<PropertyVo> children;
 }

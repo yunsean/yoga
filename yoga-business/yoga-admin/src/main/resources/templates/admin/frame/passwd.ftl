@@ -1,9 +1,6 @@
-<#import "/macro_paging.ftl" as html>
-<!DOCTYPE html>
-<#import "/macro_common.ftl" as macroCommon>
-<@macroCommon.html/>
-<html>
-<head>
+<#include "/page.component.ftl">
+<@html>
+<@head>
     <style type="text/css">
         .typeLabel {
             text-align: center;
@@ -51,8 +48,8 @@
             border-bottom: 1px solid #efefef;
         }
     </style>
-</head>
-<body>
+</@head>
+<@body>
 <div class="container-fluid">
     <div class="row">
         <ol class="breadcrumb">
@@ -115,12 +112,10 @@
         </div>
     </div>
 </div>
-<footer class="main-footer">
-<@common.footer />
-</footer>
+<div style="margin-top: 20px; text-align: center; color: #555"><@tenantTags tag="footer"/></div>
 </div>
 
-</body>
+</@body>
 <script>
     function doSubmit() {
         var oldPwd = $("#oldPwd").val();
@@ -130,7 +125,7 @@
             alertShow("danger", "两次输入的新密码不一致！", 3000);
             return;
         }
-        $.post("/api/user/passwd",
+        $.post("/admin/operator/user/passwd.json",
                 {oldPwd: oldPwd, newPwd: newPwd},
                 function (data) {
                     if (data.code < 0) {
@@ -143,5 +138,5 @@
         ;
     }
 </script>
-</html>
+</@html>
 

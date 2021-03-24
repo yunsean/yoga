@@ -933,6 +933,12 @@ public class StringUtil {
             .append(str.substring(1)).toString();
     }
 
+    public static String summary(String str, int maxLength) {
+        if (str == null) return null;
+        if (str.length() <= maxLength) return str;
+        return str.substring(0, maxLength - 3) + "...";
+    }
+
     /**
      * 将字符串的首字符转成小写，其它字符不变。
      * <p>

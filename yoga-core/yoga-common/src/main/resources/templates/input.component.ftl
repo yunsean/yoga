@@ -234,7 +234,7 @@
                 timepicker: true,
                 datepicker: true,
                 format: 'Y-m-d H:i:00',
-                formatTime: 'H:i',
+                formatTime: 'H:i:00',
                 formatDate: 'Y-m-d',
                 allowBlank: ${force?string("false", "true")}
             });
@@ -476,27 +476,54 @@ ${column.name?if_exists}
 </#macro>
 
 <#--功能：复选框组-->
-<#macro inputCheckboxGroup options class="" name="">
+<#macro inputCheckboxGroup options class="" name="" showCheckAll=false checkAllValue="-1">
+    <#if showCheckAll>
+    <#local id=(id=="")?string("${randomInputId()}", id)>
+    <label class="checkbox-inline">
+        <input name="${name}" type="checkbox" class="boxcheckall margin-l-5 ${class}" id="${id}" value="${checkAllValue}"><b>全部</b>
+    </label>
+    </#if>
     <#list options as option>
     <label class="checkbox-inline">
-        <input name="${name}" type="checkbox" value="${option.id?c}" class="margin-r-5 ${class}">${option.name}
+        <input name="${name}" type="checkbox" value="${option.id?c}" class="margin-l-5 ${class}" onchange="_cbgc_(this)">${option.name}
     </label>
     </#list>
+    <script>
+        $(document).ready(function () {
+            $("#${id}").click(function () {
+                var checked = this.checked
+                var parent = $("#${id}").parent().parent()
+                parent.find("input").each(function (index) {
+                    $(this).prop('checked', checked);
+                })
+            })
+        });
+        function _cbgc_(elem) {
+            var parent = $(elem).parent().parent()
+            var all = parent.find(".boxcheckall")
+            var allChecked = true
+            parent.find("input[name='" + $(elem).prop("name") + "']").each(function (index) {
+                if ($(this).attr("class").indexOf("boxcheckall") != -1) return
+                if (!$(this).prop('checked')) allChecked = false
+            })
+            parent.find(".boxcheckall").prop('checked', allChecked);
+        }
+    </script>
 </#macro>
 <#--功能：表单中的复选框组控件-->
-<#macro formCheckboxGroup label options text="" class="" id="" name="" icon ="" divId="" ext="" checked="">
+<#macro formCheckboxGroup label options text="" class="" id="" name="" icon ="" divId="" ext="" checked="" showCheckAll=false checkAllValue="">
 <div class="form-group" <#if divId!="">id="${divId}"</#if>>
     <label class="col-sm-3 control-label">${label}</label>
     <div class="col-sm-8">
         <#if icon!="">
             <div class="input-group">
-                <@inputCheckboxGroup options class name/>
+                <@inputCheckboxGroup options class name showCheckAll checkAllValue/>
                 <span class="input-group-addon ">
                     <i class="icon-append ${icon}"></i>
                 </span>
             </div>
         <#else>
-            <@inputCheckboxGroup options class name/>
+            <@inputCheckboxGroup options class name showCheckAll checkAllValue/>
         </#if>
     </div>
 </div>

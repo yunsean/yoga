@@ -12,17 +12,17 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TemplateVo {
 
-	@ApiModelProperty("模板ID")
+	@ApiModelProperty(value = "模板ID")
 	private Long id;
-	@ApiModelProperty("模板名称")
+	@ApiModelProperty(value = "模板名称")
 	private String name;
-	@ApiModelProperty("模板编码")
+	@ApiModelProperty(value = "模板编码")
 	private String code;
-	@ApiModelProperty("是否启用")
+	@ApiModelProperty(value = "是否启用")
 	private Boolean enabled;
-	@ApiModelProperty("字段数量")
+	@ApiModelProperty(value = "字段数量")
 	private Integer fieldCount;
-	@ApiModelProperty("模板备注")
+	@ApiModelProperty(value = "模板备注")
 	private String remark;
 }
 

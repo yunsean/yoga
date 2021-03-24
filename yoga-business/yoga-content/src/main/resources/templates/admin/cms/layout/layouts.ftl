@@ -38,11 +38,11 @@
                                     </script>
                                 </#if>
                             </div>
-                            <button type="submit" class="btn btn-success" style="margin-left: 15px"><i class="fa fa-fw fa-search"></i>搜索
+                            <button type="submit" class="btn btn-success" style="margin-left: 15px"><i class="icon icon-search"></i>搜索
                             </button>
                             <@shiro.hasPermission name="cms_template.update" >
                                 <a href="/cms/layout/modify?templateId=${param.templateId?c}" class="btn btn-primary" style="float: right">
-                                    <i class="fa fa-fw fa-plus "></i>添加</a>
+                                    <i class="icon icon-plus "></i>添加</a>
                             </@shiro.hasPermission>
                         </form>
                     </div>
@@ -70,9 +70,9 @@
                                 <td class="tableCenter">
                                     <@shiro.hasPermission name="cms_template.update" >
                                         <a href="/cms/layout/modify?id=${layout.id?c}&templateId=${param.templateId?c}" class="btn btn-info caseReport">
-                                            <i class="fa fa-fw fa-pencil "></i>修改</a>
+                                            <i class="icon icon-pencil "></i>修改</a>
                                         <a href="#" class="btn btn-danger caseReport" onclick="delLayout(${layout.id?default(0)?c})">
-                                            <i class="fa fa-fw fa-remove "></i>删除</a>
+                                            <i class="icon icon-remove "></i>删除</a>
                                     </@shiro.hasPermission>
                                 </td>
                             </tr>

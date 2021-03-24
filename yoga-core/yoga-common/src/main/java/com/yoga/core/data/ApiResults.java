@@ -81,6 +81,9 @@ public class ApiResults<T> {
     public <PO> ApiResults(Collection<PO> from, Class<T> clazz, BaseVo.Converter<PO, T> converter) {
         this.result = BaseVo.copys(from, clazz, converter);
     }
+    public <PO> ApiResults(Collection<PO> from, Class<T> clazz, BaseVo.Converter2<PO, T> converter) {
+        this.result = BaseVo.copys(from, clazz, converter);
+    }
     public <PO> ApiResults(PageInfo<PO> from, Class<T> clazz, BaseVo.Converter<PO, T> converter) {
         this.result = from == null ? null : BaseVo.copys(from.getList(), clazz, converter);
         this.page = new CommonPage(from);
