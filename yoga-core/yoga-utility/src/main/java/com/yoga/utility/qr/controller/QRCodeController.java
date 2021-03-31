@@ -1,19 +1,20 @@
 package com.yoga.utility.qr.controller;
 
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.yoga.core.base.BaseController;
+import com.yoga.core.data.ApiResult;
 import com.yoga.core.data.ApiResults;
+import com.yoga.core.data.ResultConstants;
+import com.yoga.core.exception.IllegalArgumentException;
 import com.yoga.utility.qr.dto.*;
 import com.yoga.utility.qr.model.QRBindInfo;
 import com.yoga.utility.qr.service.QRCodeService;
-import com.yoga.core.base.BaseController;
-import com.yoga.core.data.ApiResult;
-import com.yoga.core.data.ResultConstants;
-import com.yoga.core.exception.IllegalArgumentException;
 import com.yoga.utility.uploader.model.UploadFile;
 import com.yoga.utility.uploader.service.UploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.glxn.qrgen.QRCode;
-import net.glxn.qrgen.image.ImageType;
+import net.glxn.qrgen.core.image.ImageType;
+import net.glxn.qrgen.javase.QRCode;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Api(tags = "二维码工具")
 @Controller
@@ -54,7 +56,11 @@ public class QRCodeController extends BaseController {
         try {
             OutputStream os = response.getOutputStream();
             response.setContentType("image/png");
-            QRCode qrCode = QRCode.from(dto.getCode()).withSize(dto.getWidth(), dto.getHeight()).to(ImageType.PNG);
+            QRCode qrCode = QRCode.from(dto.getCode())
+                    .withErrorCorrection(ErrorCorrectionLevel.Q)
+                    .withColor((int)dto.getColor(), 0)
+                    .withSize(dto.getWidth(), dto.getHeight())
+                    .to(ImageType.PNG);
             ByteArrayOutputStream baos = qrCode.stream();
             os.write(baos.toByteArray());
             os.flush();

@@ -15,4 +15,6 @@ public class ChartDto {
     private int width = 512;
     @ApiModelProperty(value = "二维码高度，默认512px")
     private int height = 512;
+    @ApiModelProperty(value = "二维码颜色")
+    private long color = 0xff000000;
 }

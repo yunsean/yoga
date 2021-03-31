@@ -1,20 +1,21 @@
 package com.yoga.admin.tenant.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.yoga.admin.template.dto.TemplateGetDto;
 import com.yoga.admin.tenant.dto.*;
 import com.yoga.admin.tenant.vo.TenantMenuVo;
 import com.yoga.admin.tenant.vo.TenantVo;
 import com.yoga.core.base.BaseController;
+import com.yoga.core.base.BaseDto;
 import com.yoga.core.base.BaseEnum;
-import com.yoga.core.data.*;
+import com.yoga.core.data.ApiResult;
+import com.yoga.core.data.ApiResults;
+import com.yoga.core.data.CommonPage;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.exception.IllegalArgumentException;
 import com.yoga.core.property.PropertiesService;
 import com.yoga.core.utils.StringUtil;
 import com.yoga.setting.annotation.Settable;
 import com.yoga.setting.customize.CustomPage;
-import com.yoga.admin.tenant.dto.TenantListSettingsDto;
 import com.yoga.setting.model.SettableItem;
 import com.yoga.setting.model.Setting;
 import com.yoga.setting.service.SettingService;
@@ -28,7 +29,6 @@ import com.yoga.tenant.tenant.service.TemplateService;
 import com.yoga.tenant.tenant.service.TenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Controller
 @Settable
@@ -206,6 +205,14 @@ public class TenantController extends BaseController {
     public ApiResult<TenantVo> get(@ModelAttribute @Valid TenantGetDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         Tenant tenant = tenantService.get(dto.getId());
+        return new ApiResult<>(tenant, TenantVo.class);
+    }
+    @ResponseBody
+    @GetMapping("/info.json")
+    @ApiOperation(value = "当前租户详情")
+    public ApiResult<TenantVo> info(@ModelAttribute @Valid BaseDto dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
+        Tenant tenant = tenantService.get(dto.getTid());
         return new ApiResult<>(tenant, TenantVo.class);
     }
     @ResponseBody

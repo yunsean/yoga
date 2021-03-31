@@ -24,4 +24,26 @@ public class PinyinUtil {
         }
         return null;
     }
+    public static String toCapital(String str){
+        StringBuffer pybf = new StringBuffer();
+        char[] arr = str.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        for (char c : arr) {
+            if (c > 128) {
+                try {
+                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(c, defaultFormat);
+                    if (temp != null) {
+                        pybf.append(temp[0].charAt(0));
+                    }
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    e.printStackTrace();
+                }
+            } else {
+                pybf.append(c);
+            }
+        }
+        return pybf.toString().replaceAll("\\W", "").trim();
+    }
 }

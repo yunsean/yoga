@@ -1,6 +1,7 @@
 package com.yoga.admin.shiro;
 
 import com.yoga.core.redis.RedisOperator;
+import com.yoga.core.utils.StringUtil;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -24,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
@@ -40,8 +43,13 @@ import java.util.Set;
 
 
 @Configuration
-public class ShiroConfiguration {
+public class ShiroConfiguration implements EnvironmentAware {
     private static Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
+
+    private Environment environment;
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(ApplicationContext applicationContext, SessionManager sessionManager, SubjectFactory subjectFactory, Authenticator authenticator) {
@@ -59,7 +67,19 @@ public class ShiroConfiguration {
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AssignableTypeFilter(Realm.class));
         logger.info("查找Shiro授权服务");
-        Set<BeanDefinition> definitions = provider.findCandidateComponents("com.yoga.**");
+        if (true) {
+            Set<BeanDefinition> definitions = provider.findCandidateComponents("com.yoga.**");
+            createRealmBean(applicationContext, realms, definitions);
+        }
+        String realmPackage = environment.getProperty("app.shiro.realm.package");
+        if (StringUtil.isNotBlank(realmPackage)) {
+            Set<BeanDefinition> definitions = provider.findCandidateComponents(realmPackage);
+            createRealmBean(applicationContext, realms, definitions);
+        }
+        logger.info("查找Shiro授权服务结束");
+        return realms;
+    }
+    private void createRealmBean(ApplicationContext applicationContext, List<Realm> realms, Set<BeanDefinition> definitions) {
         for (BeanDefinition definition : definitions) {
             try {
                 String beanName = definition.getBeanClassName();
@@ -70,8 +90,6 @@ public class ShiroConfiguration {
                 ex.printStackTrace();
             }
         }
-        logger.info("查找Shiro授权服务结束");
-        return realms;
     }
 
     @Bean(name = "subjectFactory")
