@@ -12,6 +12,7 @@ allprojects {
     repositories {
 		mavenLocal()
 		maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+		maven{ url 'https://jitpack.io'}
     }
     group = 'com.yoga'
     version = '1.0.0'
