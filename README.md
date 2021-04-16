@@ -10,11 +10,13 @@ bootJar {
 	}
 ```
 为
+```
 bootJar {
 		enabled = true
 	}
 ```	
 2、配置文件请复制yoga-business/yoga-admin中的application-example.yml为application.yml
+
 
 ### yoga-core
 
