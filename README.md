@@ -2,6 +2,20 @@
 
 Yoga是一套定位于仅提供后台服务的多租户管理平台。平台基于Spring boot+Mybatis+Redis实现，页面采用freemarker后端渲染技术。 本框架的目的用于快速开发轻量级后台服务，比如库存管理、政务OA管理、直播回传管理、订单系统等等，并需要开发与之对应的APP、微信等前端产品。
 
+### 特别说明
+1、如果下载源码后直接依赖使用，请修改根目录下的budild.gradle文件中的两处：
+``` 
+bootJar {
+		enabled = false
+	}
+```
+为
+bootJar {
+		enabled = true
+	}
+```	
+2、配置文件请复制yoga-business/yoga-admin中的application-example.yml为application.yml
+
 ### yoga-core
 
 #### yoga-common	
