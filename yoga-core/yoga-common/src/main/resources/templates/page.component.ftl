@@ -92,7 +92,12 @@
 <#macro crumbRoot name href="#" icon="">
 <div class="row">
     <ol class="breadcrumb">
-        <li><a href="${href}"><i class="icon ${icon}"></i>${name}</a></li>
+        <li>
+            <a href="${href}">
+                <i class="icon ${icon}"></i>
+                ${name}
+            </a>
+        </li>
         <#nested>
     </ol>
 </div>

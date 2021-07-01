@@ -8,7 +8,6 @@ import com.yoga.core.redis.lock.RedisLocker;
 import com.yoga.core.redis.lock.UnableToAquireLockException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.web.util.RedirectView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,8 +130,10 @@ public class BaseController {
 				return runnable.run();
 			});
 		} catch (BusinessException ex) {
+			ex.printStackTrace();
 			throw ex;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new BusinessException(ex.getMessage());
 		}
 	}
@@ -143,8 +144,10 @@ public class BaseController {
 				return true;
 			});
 		} catch (BusinessException ex) {
+			ex.printStackTrace();
 			throw ex;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new BusinessException(ex.getMessage());
 		}
 	}

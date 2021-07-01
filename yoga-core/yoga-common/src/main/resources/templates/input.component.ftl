@@ -73,6 +73,37 @@
 </div>
 </#macro>
 
+
+<#--功能:文本框-->
+<#macro inputNumber id="" name="" min="" max="" step="" class="" placeholder="" value="" mask="" ext="" readonly=false>
+    <#local id=(id=="")?string("${randomInputId()}", id)>
+    <input type="number" class="form-control ${class}"<#if name != ""> name="${name}"</#if><#if id != ""> id="${id}"</#if><#if placeholder != ""> placeholder="${placeholder}"</#if><#if min != ""> min="${min}"</#if><#if max != ""> max="${max}"</#if><#if step != ""> step="${step}"</#if><#if value != "">value="${value}"</#if> <@formParams ext/> <#if readonly>readonly</#if> />
+    <#if mask != "">
+        <@maskinput id mask />
+    </#if>
+</#macro>
+<#--功能：表单中的文本框-->
+<#macro formNumber label id="" name="" min="" max="" step="" class="" placeholder="" value="" icon="" mask="" divId="" ext="" postfix="" readonly=false>
+    <div class="form-group" <#if divId!="">id="${divId}"</#if>>
+        <label class="col-sm-3 control-label">${label}</label>
+        <div class="col-sm-8">
+            <#if icon!="">
+                <div class="input-group">
+                    <@inputNumber id, name, min, max, step, class, placeholder, value, mask, ext, readonly />
+                    <span class="input-group-addon ">
+                    <i class="icon-append ${icon}"></i>
+                </span>
+                </div>
+            <#else>
+                <@inputText id, name, class, placeholder, value, mask, ext, readonly />
+            </#if>
+        </div>
+        <#if postfix != "">
+            <label class="col-sm-1" style="text-align: left">${postfix}</label>
+        </#if>
+    </div>
+</#macro>
+
 <#macro inputTextArea id="" name="" class="" placeholder="" value="" ext="" readonly=false>
     <#local id=(id=="")?string("${randomInputId()}", id)>
     <textarea class="form-control ${class}" <#if name != "">name="${name}"</#if> <#if id != "">id="${id}"</#if> <@formParams ext/> <#if readonly>readonly</#if> <#if placeholder != "">placeholder="${placeholder}"</#if>><#if value != "">${value}</#if></textarea>
@@ -261,7 +292,7 @@
 </#macro>
 
 <#macro showTreeNode column level index>
-<option value="${column.id?if_exists?c}">
+<option value="${(column.id?c)!}">
     <#list 0..level as x>
         <#if x < level>
             │&nbsp;&nbsp;
@@ -269,7 +300,7 @@
             ├
         </#if>
     </#list>
-${column.name?if_exists}
+${column.name!}
 </option>
 </#macro>
 <#macro showTree columns level index>
@@ -453,7 +484,8 @@ ${column.name?if_exists}
 <#--功能：复选框-->
 <#macro inputCheckbox text class="" id="" name="" checked="" value="1" onchange="">
     <label class="checkbox-inline">
-        <input name="${name}" <#if onchange != "">onchange="${onchange}"</#if> <#if id != "">id="${id}"</#if> type="checkbox" class="margin-r-5 ${class}" <#if checked != "">checked="${checked}"</#if> value="${value}">${text}
+        <input name="${name}" <#if onchange != "">onchange="${onchange}"</#if> <#if id != "">id="${id}"</#if> type="checkbox" class="margin-r-5 ${class}" <#if checked != "">checked="${checked}"</#if> value="${value}" style="vertical-align:middle; margin-top: 3px!important;">
+        <span style="vertical-align:middle;">${text}</span>
     </label>
 </#macro>
 <#--功能：表单中的复选框控件-->
@@ -682,7 +714,7 @@ ${column.name?if_exists}
 </#macro>
 
 <#--功能：上传文件-->
-<#macro inputFiles name="" class="" useFileId=false button="选择文件" icon="icon-cloud-upload" allowDelete=true allowMulti=true files=[] readonly=false>
+<#macro inputFiles name="" class="" useFileId=false button="选择文件" icon="icon-cloud-upload" allowDelete=true allowMulti=true files=[] readonly=false autoUpload=true>
     <#local id=(id=="")?string("${randomInputId()}", id)>
     <div id="${id}" class="uploader">
         <div class="file-list" data-drag-placeholder="请拖拽文件到此处"></div>
@@ -702,7 +734,11 @@ ${column.name?if_exists}
         $("#${id} .uploader-btn-browse").hide();
         </#if>
         $('#${id}').uploader({
+            <#if autoUpload>
             autoUpload: true,
+            <#else>
+            autoUpload: false,
+            </#if>
             <#if readonly>
             browse_button: null,
             drop_element: null,

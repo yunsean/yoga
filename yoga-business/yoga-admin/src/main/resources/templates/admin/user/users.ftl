@@ -59,7 +59,7 @@
                                     <@th 7 true>职级</@th>
                                 </#if>
                                 <@th>角色</@th>
-                                <@th 10 true>最后登录</@th>
+                                <@th 12 true>最后登录</@th>
                                 <@th 15 true>操作</@th>
                             </@tr>
                         </@thead>
@@ -77,7 +77,7 @@
                                     <@td true>${operator.duty!}</@td>
                                 </#if>
                                 <@td>${operator.roles!}</@td>
-                                <@td true>${(operator.lastLogin?string('yyyy-MM-dd HH:mm:ss'))!}</@td>
+                                <@td true>${(operator.lastLogin?string('yyyy-MM-dd HH:mm'))!}</@td>
                                 <@td true>
                                     <@shiro.hasPermission name="admin_user.update" >
                                         <a href="javascript:void(0)" onclick="doEdit(${(operator.id?c)!})" class="btn btn-sm btn-info">
@@ -138,33 +138,33 @@
             <@inputAvatar name="avatar"/>
         </div>
         <div class="form-group">
-            <label class="col-sm-offset-1 col-sm-1 control-label">用户名：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-offset-1 col-sm-2 control-label">用户名：</label>
+            <div class="col-sm-3">
                 <@inputText name="username"/>
             </div>
-            <label class="col-sm-1 control-label">真实姓名：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-2 control-label">真实姓名：</label>
+            <div class="col-sm-3">
                 <@inputText name="nickname"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-offset-1 col-sm-1 control-label">手机号：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-offset-1 col-sm-2 control-label">手机号：</label>
+            <div class="col-sm-3">
                 <@inputText name="mobile"/>
             </div>
-            <label class="col-sm-1 control-label">Email：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-2 control-label">Email：</label>
+            <div class="col-sm-3">
                 <@inputText name="email"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-offset-1 col-sm-1 control-label">设置密码：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-offset-1 col-sm-2 control-label">设置密码：</label>
+            <div class="col-sm-3">
                 <@inputPassword name="password" id="password" />
             </div>
             <#if branches?? && (((branches?size)!0) gt 0)>
-                <label class="col-sm-1 control-label">所属部门：</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 control-label">所属部门：</label>
+                <div class="col-sm-3">
                     <select class="form-control" name="branchId" id="branchId">
                         <option value="0">未指定</option>
                         <#list branches! as root>
@@ -175,19 +175,19 @@
             </#if>
         </div>
         <div class="form-group">
-            <label class="col-sm-offset-1 col-sm-1 control-label">确认密码：</label>
-            <div class="col-sm-4">
+            <label class="col-sm-offset-1 col-sm-2 control-label">确认密码：</label>
+            <div class="col-sm-3">
                 <@inputPassword class="col-sm-4" id="repwd"  />
             </div>
             <#if roles?? && (((branches?size)!0) gt 0)>
-                <label class="col-sm-1 control-label">所属职级：</label>
-                <div class="col-sm-4">
+                <label class="col-sm-2 control-label">所属职级：</label>
+                <div class="col-sm-3">
                     <@inputList options=duties! name="dutyId" blank="未指定" blankValue="0"/>
                 </div>
             </#if>
         </div>
         <div class="form-group">
-            <label class="col-sm-offset-1 col-sm-1 control-label">赋予角色：</label>
+            <label class="col-sm-offset-1 col-sm-2 control-label">赋予角色：</label>
             <input type="hidden" name="roleIds" value="0">
             <div class="col-sm-8">
                 <@inputCheckboxGroup options=roles! name="roleIds"/>

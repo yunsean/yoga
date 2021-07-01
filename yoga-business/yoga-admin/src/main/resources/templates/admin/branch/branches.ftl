@@ -35,19 +35,17 @@
                 <@panelHeading "部门列表" />
                 <@panelBody>
                     <@inlineForm class="margin-b-15">
-                        <@rightAction>
-                            <@shiro.hasPermission name="admin_branch.add" >
-                                <@inputButton text="添加" icon="icon-plus" class="btn btn-primary" onclick="doAdd(0);" />
-                            </@shiro.hasPermission>
-                        </@rightAction>
+                        <@shiro.hasPermission name="admin_branch.add" >
+                            <@inputButton text="添加" icon="icon-plus" class="btn btn-primary" onclick="doAdd(0);" />
+                        </@shiro.hasPermission>
                     </@inlineForm>
                     <@table>
                          <@thead>
                              <@tr>
                                 <@th 20>部门名称</@th>
                                 <@th 30>赋予角色</@th>
-                                <@th 35>描述</@th>
-                                <@th 15 true>操作</@th>
+                                <@th 30>描述</@th>
+                                <@th 20 true>操作</@th>
                              </@tr>
                          </@thead>
                          <@tbody>

@@ -6,12 +6,6 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
-/**
- * @program eshop-admin 
- * @description:  
- * @author: Horng 
- * @create: 2019/04/22 12:16 
- */
 public class PinyinUtil {
     public static String toPinyin(String str){
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
@@ -24,7 +18,8 @@ public class PinyinUtil {
         }
         return null;
     }
-    public static String toCapital(String str){
+
+    public static String setInitial(String str){
         StringBuffer pybf = new StringBuffer();
         char[] arr = str.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();

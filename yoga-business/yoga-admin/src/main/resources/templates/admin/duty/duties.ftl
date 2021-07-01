@@ -32,8 +32,8 @@
                                 <@th 5 true>级别</@th>
                                 <@th 7 true>编码</@th>
                                 <@th 25>赋予角色</@th>
-                                <@th 33>描述</@th>
-                                <@th 15 true>操作</@th>
+                                <@th 28>描述</@th>
+                                <@th 20 true>操作</@th>
                             </@tr>
                         </@thead>
                         <@tbody>
@@ -65,9 +65,10 @@
                                 </@tr>
                             </#list>
                             <@tr>
-                                <@td></@td>
+                                <@td>0</@td>
                                 <@td>默认</@td>
                                 <@td true>0</@td>
+                                <@td true></@td>
                                 <@td>无</@td>
                                 <@td>未配置职级用户的默认级别</@td>
                                 <@td true>
