@@ -6,12 +6,11 @@ import com.yoga.core.spring.SpringContext;
 import com.yoga.core.utils.StringUtil;
 import com.yoga.logging.model.LoginUser;
 import com.yoga.tenant.tenant.service.TenantService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.apache.shiro.web.subject.WebSubject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,9 +27,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Component
 public class OperatorShiroFilter extends AbstractShiroFilter {
-    private static Logger logger = LoggerFactory.getLogger(OperatorShiroFilter.class);
 
     @Autowired
     private SpringContext springContext;
@@ -53,7 +52,7 @@ public class OperatorShiroFilter extends AbstractShiroFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.setCharacterEncoding("UTF-8");  //解决页面表单提交中文乱码问题
         String url = request.getRequestURI().toLowerCase();
-        logger.info(url);
+        log.debug(url);
         String str = url;
         int idx = str.indexOf(".");
         boolean ignore = false;

@@ -8,7 +8,7 @@
 <@html>
 <@head includeDate=true includeUploader=true includeUEditor=true>
     <script src="http://webapi.amap.com/maps?v=1.3&key=61dfd7a5aa538df0de297570f9221920&plugin=AMap.Autocomplete,AMap.PlaceSearch" type="text/javascript"></script>
-    <script src="/map/location.js" type="text/javascript"></script>
+    <script src="/admin/map/location.js" type="text/javascript"></script>
     <style>
         td {
             vertical-align: middle!important;

@@ -3,9 +3,8 @@ package com.yoga.ueditor.controller;
 import com.baidu.ueditor.ActionEnter;
 import com.baidu.ueditor.ConfigManager;
 import com.yoga.core.property.PropertiesService;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Slf4j
 @ApiIgnore
 @RequestMapping("/admin/ueditor")
 @Controller
@@ -31,19 +31,18 @@ public class UEditorController {
         if (configManager == null) {
             synchronized (UEditorController.class) {
                 if (configManager == null) {
-                    Logger logger = LoggerFactory.getLogger(UEditorController.class);
                     File file = new File("./" + configFile);
-                    logger.info(file.getAbsolutePath() + " exist=" + file.exists());
+                    log.debug(file.getAbsolutePath() + " exist=" + file.exists());
                     if (!file.exists()) {
                         if (rootPath == null) rootPath = "/";
                         if (rootPath.length() < 1 || rootPath.charAt(rootPath.length() - 1) != '/') rootPath += "/";
                         file = new File(rootPath + configFile);
-                        logger.info(file.getAbsolutePath() + " exist=" + file.exists());
+                        log.debug(file.getAbsolutePath() + " exist=" + file.exists());
                     }
                     if (!file.exists()) {
                         String realPath = getAppPath(UEditorController.class) + configFile;
                         file = new File(realPath);
-                        logger.info(file.getAbsolutePath() + " exist=" + file.exists());
+                        log.debug(file.getAbsolutePath() + " exist=" + file.exists());
                     }
                     if (file.exists()) {
                         System.out.println("ueditor config file: " + file.getAbsolutePath());

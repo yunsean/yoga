@@ -74,4 +74,14 @@ public class WxmpUserService extends BaseService {
             throw new BusinessException(ex.getLocalizedMessage());
         }
     }
+    public String getOpenidByCode(String appId, String appSecret, String code) {
+        try {
+            WxSessionResult result = wxApiFactory.getWxApi().getSession(appId, appSecret, code, "authorization_code").execute().body();
+            if (result == null) throw new BusinessException("请求微信回话失败！");
+            if (result.getErrcode() != 0) throw new BusinessException(result.getErrMsg());
+            return result.getOpenid();
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getLocalizedMessage());
+        }
+    }
 }

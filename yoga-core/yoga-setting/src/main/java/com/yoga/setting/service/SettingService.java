@@ -17,6 +17,7 @@ import com.yoga.setting.mapper.SettingMapper;
 import com.yoga.setting.model.SaveItem;
 import com.yoga.setting.model.SettableItem;
 import com.yoga.setting.model.Setting;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -41,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class SettingService extends BaseService implements LoggingPrimaryHandler {
 
@@ -72,9 +74,9 @@ public class SettingService extends BaseService implements LoggingPrimaryHandler
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(Settable.class));
         provider.addIncludeFilter(new AnnotationTypeFilter(Settables.class));
-        logger.info("查找配置项服务");
+        log.debug("查找配置项服务");
         settableItems.clear();
-        Set<BeanDefinition> definitions = provider.findCandidateComponents("com.yoga");
+        Set<BeanDefinition> definitions = provider.findCandidateComponents("com");
         for (BeanDefinition definition : definitions) {
             try {
                 Class<?> entityClass = ClassUtils.getClass(definition.getBeanClassName());
@@ -83,7 +85,7 @@ public class SettingService extends BaseService implements LoggingPrimaryHandler
                     for (Settable settable : settables) {
                         if (StringUtil.isNotBlank(settable.module())) {
                             settableItems.add(new SettableItem(settable, settable.url()));
-                            logger.info("找到配置服务：" + settable.name());
+                            log.debug("找到配置服务：" + settable.name());
                         }
                     }
                 }
@@ -106,7 +108,7 @@ public class SettingService extends BaseService implements LoggingPrimaryHandler
                         for (Settable settable : settables) {
                             if (StringUtil.isNotBlank(settable.module())) {
                                 settableItems.add(new SettableItem(settable, StringUtil.isNotBlank(settable.url()) ? settable.url() : localUrl));
-                                logger.info("找到配置服务：" + settable.name());
+                                log.debug("找到配置服务：" + settable.name());
                             }
                         }
                     }
@@ -120,7 +122,7 @@ public class SettingService extends BaseService implements LoggingPrimaryHandler
             if (o2 == null) return 1;
             return o1.getName().compareTo(o2.getName());
         });
-        logger.info("共找到" + settableItems.size() + "个配置项服务");
+        log.debug("共找到" + settableItems.size() + "个配置项服务");
     }
 
     public static PageInfo<SettableItem> allSettable(String filter, String[] modules, int pageIndex, int pageSize, boolean systemOnly) {

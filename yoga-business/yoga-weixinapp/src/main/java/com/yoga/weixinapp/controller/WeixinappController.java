@@ -7,8 +7,12 @@ import com.yoga.core.base.BaseDto;
 import com.yoga.core.data.ApiResult;
 import com.yoga.core.data.ResultConstants;
 import com.yoga.core.exception.IllegalArgumentException;
+import com.yoga.core.utils.NumberUtil;
+import com.yoga.core.utils.StringUtil;
 import com.yoga.operator.user.model.User;
 import com.yoga.setting.annotation.Settable;
+import com.yoga.tenant.tenant.model.Tenant;
+import com.yoga.tenant.tenant.service.TenantService;
 import com.yoga.weixinapp.ao.SettingConfig;
 import com.yoga.weixinapp.dto.SaveSettingDto;
 import com.yoga.weixinapp.dto.WexinBindDto;
@@ -48,6 +52,8 @@ public class WeixinappController extends BaseController {
     private WxmpUserService wxmpUserService;
     @Autowired
     private SuperAdminUser superAdminUser;
+    @Autowired
+    private TenantService tenantService;
 
     @ApiIgnore
     @RequiresAuthentication
@@ -83,6 +89,17 @@ public class WeixinappController extends BaseController {
     @PostMapping("/weixin/bind.json")
     public ApiResult<String> bind(@Valid @ModelAttribute WexinBindDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
+        if (StringUtil.isNotBlank(dto.getSite())) {
+            String site = dto.getSite();
+            if (site.contains(".")) site = site.substring(0, site.indexOf("."));
+            Long tid = NumberUtil.optLong(site);
+            Tenant tenant = null;
+            if (tid != null) tenant = tenantService.get(tid);
+            if (tenant == null) tenant = tenantService.getByCode(site);
+            if (tenant == null) throw new IllegalArgumentException("站点不存在！");
+            dto.setTid(tenant.getId());
+        }
+
         String openId = wxmpUserService.getOpenidByCode(dto.getTid(), dto.getCode());
         OperatorToken token = new OperatorToken(dto.getTid(), dto.getUsername(), dto.getPassword());
         Subject subject = (new Subject.Builder()).buildSubject();

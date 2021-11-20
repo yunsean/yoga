@@ -2,6 +2,7 @@ package com.yoga.admin.shiro;
 
 import com.yoga.core.redis.RedisOperator;
 import com.yoga.core.utils.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -18,8 +19,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -42,9 +41,9 @@ import java.util.Map;
 import java.util.Set;
 
 
+@Slf4j
 @Configuration
 public class ShiroConfiguration implements EnvironmentAware {
-    private static Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
 
     private Environment environment;
     public void setEnvironment(Environment environment) {
@@ -66,9 +65,9 @@ public class ShiroConfiguration implements EnvironmentAware {
         List<Realm> realms = new ArrayList<>();
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AssignableTypeFilter(Realm.class));
-        logger.info("查找Shiro授权服务");
+        log.debug("查找Shiro授权服务");
         if (true) {
-            Set<BeanDefinition> definitions = provider.findCandidateComponents("com.yoga.**");
+            Set<BeanDefinition> definitions = provider.findCandidateComponents("com.**");
             createRealmBean(applicationContext, realms, definitions);
         }
         String realmPackage = environment.getProperty("app.shiro.realm.package");
@@ -76,7 +75,7 @@ public class ShiroConfiguration implements EnvironmentAware {
             Set<BeanDefinition> definitions = provider.findCandidateComponents(realmPackage);
             createRealmBean(applicationContext, realms, definitions);
         }
-        logger.info("查找Shiro授权服务结束");
+        log.debug("查找Shiro授权服务结束");
         return realms;
     }
     private void createRealmBean(ApplicationContext applicationContext, List<Realm> realms, Set<BeanDefinition> definitions) {

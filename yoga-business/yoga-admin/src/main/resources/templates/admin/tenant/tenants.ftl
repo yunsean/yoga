@@ -157,6 +157,11 @@
                     function (data) {
                         if (data.code < 0) {
                             alertShow("warning", data.message, 3000);
+                        } else if (data.code > 0) {
+                            alertShow("warning", data.message, 1000, function () {
+                                $("#add_modal").modal("hide");
+                                window.location.reload();
+                            });
                         } else {
                             $("#add_modal").modal("hide");
                             window.location.reload();

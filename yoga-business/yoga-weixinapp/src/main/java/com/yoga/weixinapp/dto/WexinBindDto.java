@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 public class WexinBindDto extends BaseDto {
+    @ApiModelProperty(value = "站点编码或者ID")
+    private String site;
     @ApiModelProperty(value = "小程序CODE", required = true)
     @NotBlank(message = "请在微信小程序中使用")
     private String code;

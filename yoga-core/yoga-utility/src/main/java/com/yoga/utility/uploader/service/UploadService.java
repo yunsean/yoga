@@ -10,6 +10,7 @@ import com.yoga.core.utils.StringUtil;
 import com.yoga.utility.image.ImageConvertService;
 import com.yoga.utility.uploader.mapper.UploadFileMapper;
 import com.yoga.utility.uploader.model.UploadFile;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -22,10 +23,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service("globalFileUploadService")
 public class UploadService extends BaseService {
 
@@ -210,7 +212,7 @@ public class UploadService extends BaseService {
                     BufferedImage image = renderer.renderImageWithDPI(i, dpi);
                     ImageIO.write(image, "png", dstFile);
                     imageFiles.add(imgFilePath.toString());
-                    logger.info(imgFilePath.toString());
+                    log.debug(imgFilePath.toString());
                 }
                 return imageFiles;
             } else {

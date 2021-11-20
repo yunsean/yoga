@@ -3,6 +3,9 @@ version '1.0.0'
 dependencies {
     implementation libraries['converter-jaxb']
     implementation libraries['converter-scalars']
+    implementation libraries['okhttp3']
+
+    implementation('com.google.guava:guava:30.1.1-jre')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

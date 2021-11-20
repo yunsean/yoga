@@ -79,7 +79,7 @@ public class MenuLoader {
     private static InputStream getExternalMenuFile() {
         File file = new File("menu.xml");
         try {
-            logger.info("加载根目录菜单:" + file.getAbsolutePath());
+            logger.debug("加载根目录菜单:" + file.getAbsolutePath());
             return new FileInputStream(file);
         } catch (FileNotFoundException e) {
             logger.error("未找到根目录菜单");
@@ -108,7 +108,7 @@ public class MenuLoader {
                         continue;
                     }
                     files.add(inputStream);
-                    logger.info("加载菜单资源目录：" + url.getPath());
+                    logger.debug("加载菜单资源目录：" + url.getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

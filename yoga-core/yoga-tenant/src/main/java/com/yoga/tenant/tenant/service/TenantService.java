@@ -115,6 +115,11 @@ public class TenantService extends BaseService implements LoggingPrimaryHandler 
 	public Tenant get(long id) {
 		return tenantCache.get(id);
 	}
+	public Tenant getByCode(String code) {
+		Long tenantId = allCode2Id().get(code);
+		if (tenantId == null) throw new BusinessException("租户不存在！");
+		return get(tenantId);
+	}
 	public List<Tenant> getAll() {
 		return tenantCache.getAll();
 	}
@@ -129,7 +134,7 @@ public class TenantService extends BaseService implements LoggingPrimaryHandler 
 					.count(tenantMapper) > 0) throw new BusinessException("已经存在该CODE");
 		}
 		Tenant template = null;
-		if (templateId != null) {
+		if (templateId != null && templateId > 0) {
 			template = tenantMapper.selectByPrimaryKey(templateId);
 			if (template == null || !template.getTemplate()) throw new BusinessException("租户模板不存在！");
 		}

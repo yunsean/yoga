@@ -44,33 +44,42 @@
 </#function>
 
 <#--功能:文本框-->
-<#macro inputText id="" name="" class="" placeholder="" value="" mask="" ext="" readonly=false>
+<#macro inputText id="" name="" class="" placeholder="" value="" mask="" ext="" valueregex="" readonly=false>
     <#local id=(id=="")?string("${randomInputId()}", id)>
-    <input type="text" class="form-control ${class}" <#if name != "">name="${name}"</#if> <#if id != "">id="${id}"</#if> <#if placeholder != "">placeholder="${placeholder}"</#if> <#if value != "">value="${value}"</#if> <@formParams ext/> <#if readonly>readonly</#if> />
+    <input type="text" class="form-control ${class}" <#if name != "">name="${name}"</#if>  <#if valueregex != "">oninput="value=value.replace(${valueregex}, '')"</#if> <#if id != "">id="${id}"</#if> <#if placeholder != "">placeholder="${placeholder}"</#if> <#if value != "">value="${value}"</#if> <@formParams ext/> <#if readonly>readonly</#if> />
     <#if mask != "">
         <@maskinput id mask />
     </#if>
 </#macro>
 <#--功能：表单中的文本框-->
-<#macro formText label id="" name="" class="" placeholder="" value="" icon="" mask="" divId="" ext="" postfix="" readonly=false>
+<#macro formText label id="" name="" class="" placeholder="" value="" icon="" mask="" divId="" ext="" postfix="" valueregex="" readonly=false>
 <div class="form-group" <#if divId!="">id="${divId}"</#if>>
     <label class="col-sm-3 control-label">${label}</label>
     <div class="col-sm-8">
         <#if icon!="">
             <div class="input-group">
-                <@inputText id, name, class, placeholder, value, mask, ext, readonly />
+                <@inputText id, name, class, placeholder, value, mask, ext, valueregex, readonly />
                 <span class="input-group-addon ">
                     <i class="icon-append ${icon}"></i>
                 </span>
             </div>
         <#else>
-            <@inputText id, name, class, placeholder, value, mask, ext, readonly />
+            <@inputText id, name, class, placeholder, value, mask, ext, valueregex, readonly />
         </#if>
     </div>
     <#if postfix != "">
     <label class="col-sm-1" style="text-align: left">${postfix}</label>
     </#if>
 </div>
+</#macro>
+
+<#macro divName label="" class="" id="">
+    <div class="${class}" style="width: 100%; text-align: center" <#if id!="">id="${id}"</#if>>${label}</div>
+</#macro>
+<#macro formName label="" class="" id="">
+    <div class="form-group">
+        <label class="${class}" style="width: 100%; text-align: center" <#if id!="">id="${id}"</#if>>${label}</label>
+    </div>
 </#macro>
 
 

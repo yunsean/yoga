@@ -21,6 +21,7 @@ import com.yoga.weixinapp.wxapi.WxBaseResult;
 import com.yoga.weixinapp.wxapi.WxSendSubscribeRequest;
 import com.yoga.weixinapp.wxapi.WxTokenResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ import java.util.*;
 
 @Service
 public class WxmpService extends BaseService {
+
+    @Value("${app.system.wxmp.app-id:}")
+    private String appId;
+    @Value("${app.system.wxmp.app-secret:}")
+    private String appSecret;
 
     @Lazy
     @Autowired
@@ -46,7 +52,11 @@ public class WxmpService extends BaseService {
     public final static String Key_Setting = "weixinapp.setting";
     public final static String Key_AppState = "weixinapp.state";
     public SettingConfig getSetting(long tenantId) {
-        return settingService.get(tenantId, ModuleName, Key_Setting, SettingConfig.class);
+        if (StringUtil.isNotBlank(appId) && StringUtil.isNotBlank(appSecret)) {
+            return new SettingConfig(appId, appSecret);
+        } else {
+            return settingService.get(tenantId, ModuleName, Key_Setting, SettingConfig.class);
+        }
     }
     public void saveSetting(long tenantId, SettingConfig config) {
         settingService.save(tenantId, ModuleName, Key_Setting, JSONObject.toJSONString(config), config.getAppId());
@@ -67,7 +77,27 @@ public class WxmpService extends BaseService {
         return runInLock("Lock." + key, ()-> {
             try {
                 WxTokenResult result = wxApiFactory.getWxApi().getAccessToken(config.getAppId(), config.getAppSecret(), "client_credential").execute().body();
-                if (result == null) throw new BusinessException("请求微信回话失败！");
+                if (result == null) throw new BusinessException("请求微信会话失败！");
+                if (result.getErrcode() != 0) throw new BusinessException(result.getErrMsg());
+                String token = result.getAccessToken();
+                redisOperator.set(key, token, result.getExpiresIn() / 2);
+                return token;
+            } catch (Exception ex) {
+                throw new BusinessException(ex.getLocalizedMessage());
+            }
+        });
+    }
+    public String getToken(String appId, String appSecret, boolean forceRefresh) {
+        String key = AccessTokenKey + "." + appId;
+        if (!forceRefresh) {
+            String token = redisOperator.get(key);
+            if (token != null) return token;
+        }
+        if (StringUtil.isBlank(appId)) throw new BusinessException("尚未配置小程序开发ID！");
+        return runInLock("Lock." + key, ()-> {
+            try {
+                WxTokenResult result = wxApiFactory.getWxApi().getAccessToken(appId, appSecret, "client_credential").execute().body();
+                if (result == null) throw new BusinessException("请求微信会话失败！");
                 if (result.getErrcode() != 0) throw new BusinessException(result.getErrMsg());
                 String token = result.getAccessToken();
                 redisOperator.set(key, token, result.getExpiresIn() / 2);

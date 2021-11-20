@@ -128,13 +128,13 @@ function clickLocation(keyword, callback, longitude, latitude) {
         marker = new AMap.Marker({
             map: map,
             title: title,
-            icon: "/map/map_marker.png",
+            icon: "/admin/map/map_marker.png",
             position: [longitude, latitude]
         });
     } else {
         marker = new AMap.Marker({
             map: map,
-            icon: "/map/map_marker.png",
+            icon: "/admin/map/map_marker.png",
             title: title
         });
     }

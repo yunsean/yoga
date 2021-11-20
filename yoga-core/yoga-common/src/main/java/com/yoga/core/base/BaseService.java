@@ -3,14 +3,12 @@ package com.yoga.core.base;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.redis.RedisOperator;
 import com.yoga.core.redis.lock.RedisLocker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
 public abstract class BaseService {
-	protected Logger logger = LoggerFactory.getLogger(BaseController.class);
+
 	@Autowired
 	protected RedisLocker redisLocker;
 	protected interface LockRunnable<T> {

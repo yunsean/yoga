@@ -7,6 +7,7 @@ import com.yoga.admin.aggregate.ao.Statement;
 import com.yoga.admin.aggregate.ao.Todo;
 import com.yoga.tenant.tenant.model.TenantSetting;
 import com.yoga.tenant.tenant.service.TenantService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AggregateService extends BaseService {
 
@@ -31,7 +33,7 @@ public class AggregateService extends BaseService {
 
     @PostConstruct
     public void loadPushService() {
-        logger.info("查找信息聚合服务");
+        log.debug("查找信息聚合服务");
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AssignableTypeFilter(AggregateActor.class));
         Set<BeanDefinition> beanDefinitionSet = provider.findCandidateComponents("com.yoga.**");
@@ -40,12 +42,12 @@ public class AggregateService extends BaseService {
                 Class<?> entityClass = ClassUtils.getClass(beanDefinition.getBeanClassName());
                 AggregateActor actor = (AggregateActor) springContext.getApplicationContext().getBean(entityClass);
                 aggregateActors.add(actor);
-                logger.info("找到信息聚合服务：" + entityClass.getSimpleName());
+                log.debug("找到信息聚合服务：" + entityClass.getSimpleName());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-        logger.info("共找到" + aggregateActors.size() + "个信息聚合服务");
+        log.debug("共找到" + aggregateActors.size() + "个信息聚合服务");
     }
 
     @Cacheable(value = "aggregate", keyGenerator = "wiselyKeyGenerator")

@@ -2,12 +2,14 @@ package com.yoga.utility.qr.dto;
 
 import com.yoga.core.base.BaseDto;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 public class QrDownloadDto extends BaseDto {
 
     @ApiModelProperty(value = "绑定的二维码", required = true)

@@ -1,6 +1,6 @@
 package com.yoga.utility.aliyun;
 
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -25,8 +25,7 @@ public class HttpSender {
             mdTemp = MessageDigest.getInstance("MD5");
             mdTemp.update(utfBytes);
             byte[] md5Bytes = mdTemp.digest();
-            BASE64Encoder b64Encoder = new BASE64Encoder();
-            encodeStr = b64Encoder.encode(md5Bytes);
+            encodeStr = Base64.encodeBase64String(md5Bytes);
         } catch (Exception e) {
             throw new Error("Failed to generate MD5 : " + e.getMessage());
         }
@@ -40,7 +39,7 @@ public class HttpSender {
             Mac mac = Mac.getInstance("HmacSHA1");
             mac.init(signingKey);
             byte[] rawHmac = mac.doFinal(data.getBytes());
-            result = (new BASE64Encoder()).encode(rawHmac);
+            result = new String(Base64.encodeBase64(rawHmac));
         } catch (Exception e) {
             throw new Error("Failed to generate HMAC : " + e.getMessage());
         }

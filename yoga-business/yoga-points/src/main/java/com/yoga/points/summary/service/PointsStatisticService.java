@@ -12,6 +12,7 @@ import com.yoga.points.summary.model.PointsYear;
 import com.yoga.points.summary.model.SummaryItem;
 import com.yoga.tenant.tenant.service.TenantService;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class PointsStatisticService extends BaseService {
 
@@ -150,7 +152,7 @@ public class PointsStatisticService extends BaseService {
         PointsYear pointsYear = yearService.getYear(tenantId, year);
         if (pointsYear == null) throw new BusinessException("未配置该年份");
         new Thread(() -> {
-            logger.info("[" + tenantId + "]开始积分统计");
+            log.debug("[" + tenantId + "]开始积分统计");
             try {
                 doSync(tenantId, pointsYear.getYear(), pointsYear.getBeginDate(), pointsYear.getEndDate());
             } catch (Exception ex) {
@@ -158,7 +160,7 @@ public class PointsStatisticService extends BaseService {
             }
             releaseSyncLock(tenantId);
             cleanProgress(tenantId);
-            logger.info("[" + tenantId + "]结束积分统计");
+            log.debug("[" + tenantId + "]结束积分统计");
         }).start();
     }
 

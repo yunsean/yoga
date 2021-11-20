@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
-@MapperScan("com.yoga.**.mapper")
+@MapperScan("com.**.mapper")
 public class AdminApplication {
 
     public static void main(String[] args) {

@@ -1,21 +1,19 @@
 package com.yoga.admin.shiro;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.pam.AuthenticationStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+@Slf4j
 @Component
 public class MultiRealmAuthenticator extends ModularRealmAuthenticator {
-
-    private static final Logger log = LoggerFactory.getLogger(ModularRealmAuthenticator.class);
 
     @Override
     protected AuthenticationInfo doMultiRealmAuthentication(Collection<org.apache.shiro.realm.Realm> realms, AuthenticationToken token) {
@@ -23,13 +21,13 @@ public class MultiRealmAuthenticator extends ModularRealmAuthenticator {
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
 
         if (log.isTraceEnabled()) {
-            log.trace("Iterating through {} realms for PAM authentication", realms.size());
+            log.debug("Iterating through {} realms for PAM authentication", realms.size());
         }
         AuthenticationException authenticationException = null;
         for (Realm realm : realms) {
             aggregate = strategy.beforeAttempt(realm, token, aggregate);
             if (realm.supports(token)) {
-                log.trace("Attempting to authenticate token [{}] using realm [{}]", token, realm);
+                log.debug("Attempting to authenticate token [{}] using realm [{}]", token, realm);
                 AuthenticationInfo info = null;
                 try {
                     info = realm.getAuthenticationInfo(token);

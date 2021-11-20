@@ -25,6 +25,7 @@ import java.util.Set;
 public class OperatorRealm extends AuthorizingRealm {
 
     @Autowired
+    @Lazy
     private SuperAdminUser superAdminUser;
     @Autowired
     @Lazy

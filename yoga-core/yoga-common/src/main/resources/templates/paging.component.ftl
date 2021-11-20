@@ -14,7 +14,7 @@
         找到<span style='color: #FD7B02;'>${page.totalCount}</span>条数据，
         共<span style='color: #FD7B02;'>${page.pageCount}</span>页，
         每页 ${page.pageSize} 条数据
-        &nbsp;到第<input style="text-align:center;width:3em;" class="w20 mar0 alignCenter" onblur="navigatorPage(parseInt(this.value))" maxlength="5" type="text" value="${pageIndex + 1}"style="width:40px"> 页
+        &nbsp;到第<input style="text-align:center;width:3em;" class="w20 mar0 alignCenter" onblur="navigatorPage(parseInt(this.value) - 1)" maxlength="5" type="text" value="${pageIndex + 1}"style="width:40px"> 页
     </div>
     <script language="JavaScript" type="text/javascript">
         function navigatorPage(index) {

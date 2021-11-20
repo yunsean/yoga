@@ -9,7 +9,7 @@ import java.util.Date;
 @Service
 public class PropertiesService {
 
-    @Value("${app.system.base_url:http://localhost:8200}")
+    @Value("${app.system.base-url:http://localhost:8200}")
     private String sysBaseurl;
     public String getSysBaseurl() {
         return sysBaseurl;
@@ -17,9 +17,9 @@ public class PropertiesService {
 
     @Value("${app.file.temp_path:/tmp}")
     private String fileTempPath;
-    @Value("${app.file.local_path:/tmp}")
+    @Value("${app.file.local-path:/tmp}")
     private String fileLocalPath;
-    @Value("${app.file.remote_path:http://localhost:88}")
+    @Value("${app.file.remote-path:http://localhost:88}")
     private String fileRemotePath;
     @Value("${app.file.append_date:true}")
     private boolean fileAppendDate;

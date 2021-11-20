@@ -27,11 +27,13 @@ import com.yoga.tenant.tenant.model.TenantMenu;
 import com.yoga.tenant.tenant.model.TenantSetting;
 import com.yoga.tenant.tenant.service.TemplateService;
 import com.yoga.tenant.tenant.service.TenantService;
+import com.yoga.utility.alidns.service.AliDnsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -47,6 +49,10 @@ import java.util.*;
 @RequestMapping("/admin/tenant/tenant")
 public class TenantController extends BaseController {
 
+
+    @Value("${app.system.public-ip:}")
+    private String publicIp;
+
     @Autowired
     private TenantService tenantService;
     @Autowired
@@ -55,6 +61,8 @@ public class TenantController extends BaseController {
     private TemplateService templateService;
     @Autowired
     private PropertiesService propertiesService;
+    @Autowired
+    private AliDnsService dnsService;
 
     @ApiIgnore
     @GetMapping("/list")
@@ -224,6 +232,13 @@ public class TenantController extends BaseController {
         if (dto.getTid() != 0) throw new BusinessException("非法操作");
         if (dto.getPassword().length() < 6) throw new IllegalArgumentException("管理员密码至少6个字符！");
         tenantService.add(dto.getName(), dto.getCode(), dto.getRemark(), dto.getTemplateId(), dto.getUsername(), dto.getPassword(), dto.getNickname(), dto.getMobile());
+        if (StringUtil.isNotBlank(publicIp)) {
+            try {
+                dnsService.addARecord(dto.getCode(), publicIp, null);
+            } catch (Exception ex) {
+                return new ApiResult(1, "创建租户成功，但添加域名解析失败，请手动管理域名解析！");
+            }
+        }
         return new ApiResult();
     }
     @ResponseBody
@@ -240,27 +255,42 @@ public class TenantController extends BaseController {
     @DeleteMapping("/delete.json")
     @RequiresPermissions("gbl_tenant.del")
     @ApiOperation(value = "删除现有租户")
-    public ApiResult delTenant(@Valid @ModelAttribute TenantDeleteDto dto, BindingResult bindingResult) {
+    public ApiResult delete(@Valid @ModelAttribute TenantDeleteDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         if (dto.getTid() != 0) throw new BusinessException("非法操作");
+        Tenant tenant = tenantService.get(dto.getId());
         tenantService.delete(dto.getId());
+        if (StringUtil.isNotBlank(publicIp) && StringUtil.isNotBlank(tenant.getCode())) {
+            try {
+                dnsService.deleteARecord(tenant.getCode(), null);
+            } catch (Exception ex) {
+                return new ApiResult(1, "删除租户成功，但删除域名解析失败，请手动管理域名解析！");
+            }
+        }
         return new ApiResult();
     }
     @ResponseBody
     @PostMapping("/renew.json")
     @RequiresPermissions("gbl_tenant.del")
     @ApiOperation(value = "恢复删除的租户")
-    public ApiResult renewTenant(@Valid @ModelAttribute TenantRenewDto dto, BindingResult bindingResult) throws Exception {
+    public ApiResult renew(@Valid @ModelAttribute TenantRenewDto dto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         if (dto.getTid() != 0) throw new BusinessException("非法操作");
         tenantService.renew(dto.getId(), dto.getCode());
+        if (StringUtil.isNotBlank(publicIp)) {
+            try {
+                dnsService.addARecord(dto.getCode(), publicIp, null);
+            } catch (Exception ex) {
+                return new ApiResult(1, "恢复租户成功，但添加域名解析失败，请手动管理域名解析！");
+            }
+        }
         return new ApiResult();
     }
     @ResponseBody
     @PostMapping("/repair.json")
     @RequiresPermissions("gbl_tenant.update")
     @ApiOperation(value = "修复租户权限")
-    public ApiResult repairTenant(@Valid @ModelAttribute TenantRepairDto dto, BindingResult bindingResult) {
+    public ApiResult repair(@Valid @ModelAttribute TenantRepairDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new IllegalArgumentException(bindingResult);
         if (dto.getTid() != 0) throw new BusinessException("非法操作");
         return new ApiResult<>(tenantService.repair(dto.getId()));

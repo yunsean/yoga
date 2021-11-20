@@ -1,13 +1,13 @@
 package com.yoga.logging.aspect;
 
 import com.yoga.core.base.BaseEnum;
+import com.yoga.core.utils.StringUtil;
 import com.yoga.logging.annotation.Logging;
 import com.yoga.logging.service.LoggingService;
-import com.yoga.core.utils.StringUtil;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,6 @@ import java.util.Set;
 @Component
 @Order(1)
 public class LoggingAspect {
-    protected Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Autowired
     private LoggingService loggingService;

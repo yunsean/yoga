@@ -11,8 +11,6 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.utils.StringUtil;
 import com.yoga.utility.sms.service.SmsActor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AliyunSmsActor implements SmsActor {
-    public static final Logger logger = LoggerFactory.getLogger(AliyunSmsActor.class);
 
     private IAcsClient client = null;
     private String signName = null;

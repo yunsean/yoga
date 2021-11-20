@@ -2,10 +2,10 @@ package com.yoga.utility.aliyun;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yoga.setting.annotation.Settable;
-import com.yoga.setting.service.SettingService;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.utils.StringUtil;
+import com.yoga.setting.annotation.Settable;
+import com.yoga.setting.service.SettingService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -14,9 +14,9 @@ import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.shiro.codec.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Encoder;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
@@ -121,7 +121,7 @@ public class OCRIdCardRecognizer {
             File file = new File(path);
             if (file.exists()) return encodeBase64File(path);
             byte[] buffer = getImageFromNetByUrl(path);
-            return new BASE64Encoder().encode(buffer);
+            return Base64.encodeToString(buffer);
         } catch (Exception ex) {
             throw new RuntimeException("读取图片文件失败！");
         }
@@ -132,7 +132,7 @@ public class OCRIdCardRecognizer {
         byte[] buffer = new byte[(int) file.length()];
         inputFile.read(buffer);
         inputFile.close();
-        return new BASE64Encoder().encode(buffer);
+        return Base64.encodeToString(buffer);
     }
     public static byte[] getImageFromNetByUrl(String strUrl) throws Exception {
         URL url = new URL(strUrl);

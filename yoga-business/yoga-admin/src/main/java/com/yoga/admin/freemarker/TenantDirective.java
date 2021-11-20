@@ -37,6 +37,7 @@ public class TenantDirective implements TemplateDirectiveModel {
         else if ("footer".equals(tag)) value = setting.getFooterRemark();
         else if ("icon".equals(tag)) value = setting.getAdminIcon();
         else if ("resource".equals(tag)) value = setting.getResourcePrefix();
+        if (value == null) value = "";
         Writer writer = env.getOut();
         writer.write(value);
         if (body != null) body.render(env.getOut());

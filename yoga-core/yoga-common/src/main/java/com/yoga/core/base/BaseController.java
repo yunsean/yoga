@@ -8,8 +8,6 @@ import com.yoga.core.redis.lock.RedisLocker;
 import com.yoga.core.redis.lock.UnableToAquireLockException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,7 @@ import java.io.IOException;
 
 @Controller
 public class BaseController {
-	protected Logger logger = LoggerFactory.getLogger(BaseController.class);
+
 	@Autowired
 	protected RedisLocker redisLocker;
 	protected interface LockRunnable<T> {

@@ -1,7 +1,5 @@
 package com.yoga.core.error;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.UndeclaredThrowableException;
 
 public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver {
-    private static final Logger LOG = LoggerFactory.getLogger(GlobalHandlerExceptionResolver.class);
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) {

@@ -7,21 +7,18 @@ import com.yoga.core.base.BaseService;
 import com.yoga.core.exception.BusinessException;
 import com.yoga.core.spring.SpringContext;
 import com.yoga.core.utils.StringUtil;
-import com.yoga.setting.annotation.Settable;
-import com.yoga.setting.annotation.Settables;
 import com.yoga.setting.model.Setting;
 import com.yoga.setting.service.SettingService;
 import com.yoga.utility.sms.mapper.SmsResultMapper;
 import com.yoga.utility.sms.model.SmsResult;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.task.AsyncTaskExecutor;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -31,10 +28,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
+@Slf4j
 @Service
 @EnableAsync
 public class SmsService extends BaseService {
-	public static final Logger logger = LoggerFactory.getLogger(SmsService.class);
 	public final static String ModuleName = "gcf_sms";
 	public final static String Key_SmsConfig = "sms.setting";
 
@@ -60,7 +57,7 @@ public class SmsService extends BaseService {
 
 	@PostConstruct
 	public void loadSmsService() {
-		logger.info("查找短信发布服务");
+		log.debug("查找短信发布服务");
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
 		provider.addIncludeFilter(new AssignableTypeFilter(SmsFactory.class));
 		Set<BeanDefinition> beanDefinitionSet = provider.findCandidateComponents("com.yoga.**");
@@ -68,12 +65,12 @@ public class SmsService extends BaseService {
 			try {
 				Class<?> entityClass = ClassUtils.getClass(beanDefinition.getBeanClassName());
 				smsServices.add(entityClass);
-				logger.info("找到短信发布服务：" + entityClass.getSimpleName());
+				log.debug("找到短信发布服务：" + entityClass.getSimpleName());
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
-		logger.info("共找到" + smsServices.size() + "个短信发布服务");
+		log.debug("共找到" + smsServices.size() + "个短信发布服务");
 	}
 
 	public Setting getSetting(long tenantId) {

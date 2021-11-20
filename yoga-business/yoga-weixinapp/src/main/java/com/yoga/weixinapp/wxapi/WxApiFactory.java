@@ -1,11 +1,11 @@
 package com.yoga.weixinapp.wxapi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.yoga.core.data.api.ConverterFactory;
 import lombok.Getter;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
@@ -23,7 +23,7 @@ public class WxApiFactory {
 
     @PostConstruct
     public void init() {
-        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor((String message) -> logger.info(message));
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor((String message) -> logger.debug(message));
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(10, TimeUnit.SECONDS)

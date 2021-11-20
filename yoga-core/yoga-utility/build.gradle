@@ -1,7 +1,15 @@
 version '1.0.0'
 
+
+repositories {
+    mavenLocal()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://oss.sonatype.org/service/local/staging/deploy/maven2/' }
+}
+
 dependencies {
-	implementation project(':yoga-core:yoga-common')
+    implementation project(':yoga-core:yoga-common')
     implementation project(':yoga-core:yoga-excelkit')
     implementation project(':yoga-core:yoga-setting')
     implementation project(':yoga-core:yoga-logging')
@@ -19,9 +27,14 @@ dependencies {
     implementation('org.apache.httpcomponents:httpclient:4.5.6')
     implementation('com.github.kenglxn.QRGen:javase:2.6.0')
 
+    implementation('com.baidu.aip:java-sdk:4.16.2')
+
     implementation("org.apache.pdfbox:pdfbox:2.0.1")
     implementation("com.lowagie:itext:2.0.7")
-    implementation("com.alibaba:druid:1.0.18")
+//    implementation("com.alibaba:druid:1.0.18")
+
+    implementation("com.aliyun:aliyun-java-sdk-alidns:2.0.10")
+    implementation("com.aliyun:aliyun-java-sdk-core:4.3.2")
 }
 configurations.all {
     exclude group: 'com.sun.mail', module: 'mailapi'

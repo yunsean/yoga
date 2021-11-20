@@ -9,6 +9,7 @@
 		<module code="gcf_email" sort="5" icon="" name="邮件通知" />
 		<module code="gcf_push" sort="5" icon="" name="移动推送" />
 		<module code="api_aliyun_idcard" sort="5" icon="" name="身份证识别" />
+		<module code="api_baidu_aip" sort="6" icon="" name="百度图像搜索" />
 		<module code="api_feie_printer" sort="6" icon="" name="飞鹅云打印" >
 			<permissions code="api_feie_printer.print" sort = "2" icon = "" name = "打印"  url = ""/>
 			<permissions code="api_feie_printer.clean" sort = "2" icon = "" name = "清空打印队列"  url = ""/>

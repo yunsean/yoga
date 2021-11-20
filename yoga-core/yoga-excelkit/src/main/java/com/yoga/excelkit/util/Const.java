@@ -27,7 +27,7 @@ public final class Const {
   public static final String XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   public static final String XLSX_HEADER_KEY = "Content-disposition";
   public static final String XLSX_HEADER_VALUE_TEMPLATE = "attachment; filename=%s";
-  public static final String XLSX_DEFAULT_EMPTY_CELL_VALUE = "$EMPTY_CELL$";
+  public static final String XLSX_DEFAULT_EMPTY_CELL_VALUE = "";
   public static final Integer XLSX_DEFAULT_BEGIN_READ_ROW_INDEX = 1;
   public static final String SAX_PARSER_CLASS = "org.apache.xerces.parsers.SAXParser";
   public static final String SAX_C_ELEMENT = "c";

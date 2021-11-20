@@ -85,6 +85,8 @@ public class AdminController extends BaseController {
     @Value("${app.login.patcha-font:}")
     private String patchaFont = null;
 
+    @Value("${app.login.default-login:/admin/frame/login}")
+    private String defaultLogin = "/admin/frame/login";
     @Value("${app.login.default-back:/admin/login/back.jpg}")
     private String defaultBack = "/admin/login/back.jpg";
     @Value("${app.login.default-pick:/admin/login/pick.png}")
@@ -227,7 +229,7 @@ public class AdminController extends BaseController {
             model.put("img", img);
             model.put("error", dto.getReason());
             if (choiceTenant) model.put("tenants", tenantService.getAll());
-            return "/admin/frame/login";
+            return defaultLogin;
         } else {
             String query = request.getQueryString();
             String url = customize.getAdminLogin();
