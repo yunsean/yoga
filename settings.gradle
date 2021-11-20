@@ -20,5 +20,6 @@ include 'yoga-sms:yoga-sms-eucpsms'
 include 'yoga-sms:yoga-sms-massms'
 include 'yoga-sms:yoga-sms-yunpian'
 include 'yoga-sms:yoga-sms-aliyun'
+include 'yoga-sms:yoga-sms-chanzor'
 
 include 'yoga-push:yoga-push-jiguang'
