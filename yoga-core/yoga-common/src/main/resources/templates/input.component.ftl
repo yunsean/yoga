@@ -86,7 +86,7 @@
 <#--功能:文本框-->
 <#macro inputNumber id="" name="" min="" max="" step="" class="" placeholder="" value="" mask="" ext="" readonly=false>
     <#local id=(id=="")?string("${randomInputId()}", id)>
-    <input type="number" class="form-control ${class}"<#if name != ""> name="${name}"</#if><#if id != ""> id="${id}"</#if><#if placeholder != ""> placeholder="${placeholder}"</#if><#if min != ""> min="${min}"</#if><#if max != ""> max="${max}"</#if><#if step != ""> step="${step}"</#if><#if value != "">value="${value}"</#if> <@formParams ext/> <#if readonly>readonly</#if> />
+    <input type="number" class="form-control ${class}"<#if name != ""> name="${name}"</#if><#if id != ""> id="${id}"</#if><#if placeholder != ""> placeholder="${placeholder}"</#if><#if min != ""> min="${min}"</#if><#if max != ""> max="${max}"</#if><#if step != ""> step="${step}"</#if> value="${value?c}" <@formParams ext/> <#if readonly>readonly</#if> />
     <#if mask != "">
         <@maskinput id mask />
     </#if>
@@ -104,7 +104,7 @@
                 </span>
                 </div>
             <#else>
-                <@inputText id, name, class, placeholder, value, mask, ext, readonly />
+                <@inputNumber id, name, class, placeholder, value, mask, ext, readonly />
             </#if>
         </div>
         <#if postfix != "">
@@ -493,12 +493,12 @@ ${column.name!}
 <#--功能：复选框-->
 <#macro inputCheckbox text class="" id="" name="" checked="" value="1" onchange="">
     <label class="checkbox-inline">
-        <input name="${name}" <#if onchange != "">onchange="${onchange}"</#if> <#if id != "">id="${id}"</#if> type="checkbox" class="margin-r-5 ${class}" <#if checked != "">checked="${checked}"</#if> value="${value}" style="vertical-align:middle; margin-top: 3px!important;">
+        <input name="${name}" <#if onchange != "">onchange="${onchange}"</#if> <#if id != "">id="${id}"</#if> type="checkbox" class="margin-r-5 ${class}" <#if checked != "">checked="${checked}"</#if> value="${value}" style="vertical-align:middle; margin-top: 5px!important;">
         <span style="vertical-align:middle;">${text}</span>
     </label>
 </#macro>
 <#--功能：表单中的复选框控件-->
-<#macro formCheckbox label text="" class="" id="" name="" icon ="" divId="" ext="" checked="" value="1">
+<#macro formCheckbox label text="&nbsp;" class="" id="" name="" icon ="" divId="" ext="" checked="" value="1">
 <div class="form-group" <#if divId!="">id="${divId}"</#if>>
     <label class="col-sm-3 control-label">${label}</label>
     <div class="col-sm-8">
